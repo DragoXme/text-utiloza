@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Line Sorter - Text Utiloza</title>
+    <meta name="description" content="Sort lines alphabetically, reverse lines, randomize lines, remove duplicate lines, and sort lines by length.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://text.utiloza.top/sorter/">
+    <link rel="icon" href="../assets/utiloza-mark.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="../styles.css">
+  </head>
+  <body data-tool="sorter">
+    <header class="site-header"><div class="container header-inner"><a class="brand" href="../index.html"><img src="../assets/utiloza-mark.svg" alt="" width="34" height="34"><span>Utiloza <small>Text tools</small></span></a><nav class="site-nav" aria-label="Main navigation"><a href="../index.html#tools">Tools</a><a href="../about.html">About</a><a href="../privacy.html">Privacy</a><a href="../contact.html">Contact</a></nav></div></header>
+    <main>
+      <section class="page-hero"><div class="container"><p class="eyebrow">Line tools</p><h1>Line Sorter</h1><p class="tool-intro">Organize line-based text for lists, keywords, names, notes, and data cleanup.</p></div></section>
+      <section class="tool-section"><div class="container tool-shell">
+        <div class="workspace">
+          <label class="field-label" for="main-text">Input lines</label><textarea class="text-input" id="main-text" data-text-input placeholder="Paste one item per line..."></textarea>
+          <div class="control-grid">
+            <button class="button primary" type="button" data-action="az">Sort A-Z</button>
+            <button class="button" type="button" data-action="za">Sort Z-A</button>
+            <button class="button" type="button" data-action="reverse">Reverse lines</button>
+            <button class="button" type="button" data-action="length">Sort by length</button>
+            <button class="button" type="button" data-action="unique">Remove duplicates</button>
+            <button class="button" type="button" data-action="random">Randomize lines</button>
+          </div>
+          <label class="field-label" for="result-text">Sorted lines</label><textarea class="result-input" id="result-text" data-result-output readonly></textarea>
+          <div class="control-grid"><button class="button" type="button" data-copy-target="#result-text">Copy result</button><button class="button danger" type="button" data-clear-target="#main-text">Clear input</button></div>
+          <p class="toast" data-toast aria-live="polite"></p>
+        </div>
+        <aside class="side-panel"><h2>Related tools</h2><ul class="related-list"><li><a href="../cleaner/index.html">Text Cleaner</a></li><li><a href="../counter/index.html">Text Counter</a></li><li><a href="../find-replace/index.html">Find and Replace</a></li></ul></aside>
+      </div></section>
+    </main>
+    <footer class="site-footer"><div class="container footer-grid"><div><a class="brand footer-brand" href="../index.html"><img src="../assets/utiloza-mark.svg" alt="" width="32" height="32"><span>Utiloza <small>Text tools</small></span></a><p>Free online text tools for everyday writing and editing tasks.</p></div><nav aria-label="Footer navigation"><a href="../about.html">About</a><a href="../privacy.html">Privacy</a><a href="../terms.html">Terms</a><a href="../contact.html">Contact</a></nav></div><div class="container footer-bottom"><span>&copy; <span data-year>2026</span> Utiloza. All rights reserved.</span><span><a href="https://utiloza.top/">Utiloza home</a></span></div></footer>
+    <script src="../script.js" defer></script>
+  </body>
+</html>
