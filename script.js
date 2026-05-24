@@ -118,15 +118,15 @@ const searchCatalog = {
 };
 const iconSet = {
   calculator:
-    '<svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="3"></rect><path d="M8 7h8"></path><path d="M8 11h2"></path><path d="M12 11h2"></path><path d="M16 11h.01"></path><path d="M8 15h2"></path><path d="M12 15h2"></path><path d="M16 15h.01"></path></svg>',
+    '<img src="/assets/basic-calculator-mark.svg" alt="">',
   bmi:
-    '<svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 6h14l-1.5 12h-11z"></path><path d="M9 10a3 3 0 0 1 6 0"></path><path d="M12 10l2-2"></path></svg>',
+    '<img src="/assets/bmi-calculator-mark.svg" alt="">',
   age:
-    '<svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="3"></rect><path d="M8 3v4"></path><path d="M16 3v4"></path><path d="M4 10h16"></path><path d="M9 15h6"></path><path d="M12 12v6"></path></svg>',
+    '<img src="/assets/age-calculator-mark.svg" alt="">',
   text:
-    '<svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l4 4v14H7z"></path><path d="M14 3v5h5"></path><path d="M9 12h6"></path><path d="M9 16h5"></path><path d="m15 18 1.5 1.5L20 16"></path></svg>',
+    '<img src="/assets/text-cleaner-mark.svg" alt="">',
   gradient:
-    '<svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="14" rx="3"></rect><path d="M7 16 17 8"></path><circle cx="8" cy="9" r="1"></circle><circle cx="16" cy="15" r="1"></circle></svg>',
+    '<img src="/assets/gradient-background-generator-mark.svg" alt="">',
   request:
     '<svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6"></path><path d="M10 21h4"></path><path d="M8 14a6 6 0 1 1 8 0c-.8.7-1 1.5-1 2H9c0-.5-.2-1.3-1-2Z"></path><path d="M12 8v4"></path><path d="M10 10h4"></path></svg>',
 };

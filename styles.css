@@ -476,6 +476,18 @@ html[data-theme="dark"] .header-search-panel .suggestion-icon {
   height: 18px;
 }
 
+.featured-icon img,
+.card-icon img,
+.tool-icon img,
+.panel-list span img,
+.suggestion-icon img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  border-radius: inherit;
+}
+
 .header-search-panel .suggestion-copy {
   min-width: 0;
 }
