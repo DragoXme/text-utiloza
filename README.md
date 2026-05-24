@@ -4,4 +4,4 @@ Static website for `text.utiloza.top`.
 
 ## Tool pages
 
-No tool pages are published right now.
+- `/text-cleaner/` - clean messy copied text, PDF line breaks, spacing, blank lines, and duplicate lines.
