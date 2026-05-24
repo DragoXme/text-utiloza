@@ -485,8 +485,21 @@ html[data-theme="dark"] .header-search-panel .suggestion-icon {
   width: 100%;
   height: 100%;
   display: block;
-  object-fit: cover;
-  border-radius: inherit;
+  object-fit: contain;
+  border-radius: 0;
+}
+
+.featured-icon:has(img),
+.card-icon:has(img),
+.collection-icon:has(img),
+.tool-icon:has(img),
+.panel-list span:has(img),
+.suggestion-icon:has(img) {
+  color: inherit;
+  background: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  overflow: visible;
 }
 
 .header-search-panel .suggestion-copy {
@@ -1227,6 +1240,22 @@ html[data-theme="dark"] .strong-action {
   background: var(--violet);
 }
 
+.tool-card.request-tool-card::before {
+  background:
+    radial-gradient(circle at 82% 18%, rgba(112, 71, 217, 0.16), transparent 36%),
+    linear-gradient(135deg, rgba(37, 99, 235, 0.12), rgba(21, 128, 61, 0.08) 58%, rgba(194, 65, 12, 0.08));
+}
+
+.tool-card.request-tool-card .tool-icon {
+  color: #07111f;
+  background: linear-gradient(135deg, #7dd3fc, #34d399);
+  box-shadow: 0 14px 34px rgba(16, 24, 40, 0.13);
+}
+
+html[data-theme="dark"] .tool-card.request-tool-card .tool-icon {
+  color: #050814;
+}
+
 .tool-card h3 {
   grid-column: 1;
   grid-row: 1;
@@ -1398,6 +1427,30 @@ html[data-theme="dark"] .strong-action {
   color: #aeb6bd;
   border-top: 1px solid rgba(255, 255, 255, 0.14);
   font-size: 0.92rem;
+}
+
+.footer-bottom a[href^="https://utiloza.top"] {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 0 14px;
+  color: #07111f;
+  background: linear-gradient(135deg, #7dd3fc, #34d399);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: var(--pill-radius);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.18);
+  font-weight: 950;
+  text-decoration: none;
+  transition: transform 160ms ease, box-shadow 180ms ease;
+}
+
+.footer-bottom a[href^="https://utiloza.top"]:hover,
+.footer-bottom a[href^="https://utiloza.top"]:focus-visible {
+  color: #07111f;
+  background: linear-gradient(135deg, #7dd3fc, #34d399);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.22);
+  outline: none;
+  transform: translateY(-1px);
 }
 
 .tool-grid .tool-card:only-child {
