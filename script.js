@@ -53,6 +53,14 @@ const searchCatalog = {
       keywords: ["age", "birthday", "date", "years", "months", "days", "calculator"],
     },
     {
+      title: "Image Converter",
+      type: "Tool",
+      description: "Convert PNG, JPG, and WebP images in your browser.",
+      url: "https://convert.utiloza.top/image-converter/",
+      icon: "imageConverter",
+      keywords: ["image", "converter", "convert", "png", "jpg", "jpeg", "webp", "photo"],
+    },
+    {
       title: "Text Cleaner",
       type: "Tool",
       description: "Clean copied text, fix spacing, broken lines, blanks, and duplicates.",
@@ -89,6 +97,16 @@ const searchCatalog = {
       keywords: ["gradient", "background", "color", "image", "wallpaper"],
     },
   ],
+  convert: [
+    {
+      title: "Image Converter",
+      type: "Tool",
+      description: "Convert PNG, JPG, and WebP images in your browser.",
+      url: "https://convert.utiloza.top/image-converter/",
+      icon: "imageConverter",
+      keywords: ["image", "converter", "convert", "png", "jpg", "jpeg", "webp", "photo"],
+    },
+  ],
   calculator: [
     {
       title: "Basic Calculator",
@@ -123,6 +141,8 @@ const iconSet = {
     '<img src="/assets/bmi-calculator-mark.svg" alt="">',
   age:
     '<img src="/assets/age-calculator-mark.svg" alt="">',
+  imageConverter:
+    '<img src="/assets/image-converter-mark.svg" alt="">',
   text:
     '<img src="/assets/text-cleaner-mark.svg" alt="">',
   gradient:
@@ -145,6 +165,10 @@ const getSearchScope = () => {
     return "calculator";
   }
 
+  if (host.startsWith("convert.")) {
+    return "convert";
+  }
+
   const brandContext = document.querySelector(".brand small")?.textContent.toLowerCase() || "";
 
   if (brandContext.includes("text")) {
@@ -157,6 +181,10 @@ const getSearchScope = () => {
 
   if (brandContext.includes("calculator")) {
     return "calculator";
+  }
+
+  if (brandContext.includes("convert")) {
+    return "convert";
   }
 
   return "main";
@@ -336,6 +364,7 @@ if (siteHeader && headerThemePicker) {
     text: "Text Utiloza",
     color: "Color Utiloza",
     calculator: "Calculator Utiloza",
+    convert: "Convert Utiloza",
   };
   const normalize = (value) => value.toLowerCase().trim();
   const getToolRequestUrl = (requestText) => {
