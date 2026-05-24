@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Text tools">
+  <defs>
+    <linearGradient id="textToolsBg" x1="8" y1="8" x2="56" y2="56" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#2563eb"/>
+      <stop offset=".55" stop-color="#14b8a6"/>
+      <stop offset="1" stop-color="#22c55e"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="18" fill="url(#textToolsBg)"/>
+  <path d="M18 16h21l7 7v27H18z" fill="#101828" opacity=".88"/>
+  <path d="M39 16v8h8" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M14 22v30h26" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round" opacity=".72"/>
+  <path d="M24 31h16M24 39h13" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round"/>
+</svg>
