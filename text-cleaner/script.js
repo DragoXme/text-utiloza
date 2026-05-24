@@ -105,11 +105,7 @@ and copy the result fast.`;
     inputLines: document.querySelector("#inputLines"),
     outputWords: document.querySelector("#outputWords"),
     outputChars: document.querySelector("#outputChars"),
-    outputLines: document.querySelector("#outputLines"),
-    brokenLinesCount: document.querySelector("#brokenLinesCount"),
-    extraSpacesCount: document.querySelector("#extraSpacesCount"),
-    blankLinesCount: document.querySelector("#blankLinesCount"),
-    duplicateLinesCount: document.querySelector("#duplicateLinesCount")
+    outputLines: document.querySelector("#outputLines")
   };
 
   function countWords(text) {
@@ -122,55 +118,21 @@ and copy the result fast.`;
   }
 
   function updateTextStats(prefix, text) {
-    statLabels[`${prefix}Words`].textContent = String(countWords(text));
-    statLabels[`${prefix}Chars`].textContent = String(text.length);
-    statLabels[`${prefix}Lines`].textContent = String(countLines(text));
+    const values = {
+      [`${prefix}Words`]: countWords(text),
+      [`${prefix}Chars`]: text.length,
+      [`${prefix}Lines`]: countLines(text)
+    };
+
+    Object.entries(values).forEach(([key, value]) => {
+      if (statLabels[key]) {
+        statLabels[key].textContent = String(value);
+      }
+    });
   }
 
   function isBulletLine(line) {
     return /^\s*(?:[-*\u2022]|[0-9]+[.)]|[a-zA-Z][.)])\s+/.test(line);
-  }
-
-  function looksLikeSentenceEnd(line) {
-    return /[.!?:;)"'\]]\s*$/.test(line);
-  }
-
-  function detectIssues(text) {
-    const lines = text.replace(/\r\n?/g, "\n").split("\n");
-    const seen = new Set();
-    let duplicates = 0;
-    let broken = 0;
-
-    lines.forEach((line, index) => {
-      const current = line.trim();
-      const next = lines[index + 1] ? lines[index + 1].trim() : "";
-
-      if (current) {
-        const key = current.toLowerCase();
-        if (seen.has(key)) {
-          duplicates += 1;
-        }
-        seen.add(key);
-      }
-
-      if (
-        current &&
-        next &&
-        !isBulletLine(current) &&
-        !isBulletLine(next) &&
-        !looksLikeSentenceEnd(current) &&
-        current.length > 18
-      ) {
-        broken += 1;
-      }
-    });
-
-    return {
-      blankLines: lines.filter((line) => !line.trim()).length,
-      duplicates,
-      extraSpaces: (text.match(/[^\S\r\n]{2,}/g) || []).length,
-      broken
-    };
   }
 
   function escapeRegExp(value) {
@@ -341,14 +303,6 @@ and copy the result fast.`;
     render();
   }
 
-  function updateInsights(text) {
-    const issues = detectIssues(text);
-    statLabels.brokenLinesCount.textContent = String(issues.broken);
-    statLabels.extraSpacesCount.textContent = String(issues.extraSpaces);
-    statLabels.blankLinesCount.textContent = String(issues.blankLines);
-    statLabels.duplicateLinesCount.textContent = String(issues.duplicates);
-  }
-
   function render() {
     const input = inputText.value;
     const output = cleanText(input);
@@ -356,7 +310,6 @@ and copy the result fast.`;
     outputText.value = output;
     updateTextStats("input", input);
     updateTextStats("output", output);
-    updateInsights(input);
   }
 
   function temporaryButtonText(button, label, delay = 1500) {

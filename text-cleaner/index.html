@@ -84,156 +84,105 @@
     </header>
 
     <main id="main" class="tool-main">
-      <section class="tool-hero compact">
-        <div class="container tool-hero-inner">
-          <div>
-            <p class="eyebrow">Text Cleaner</p>
-            <h1>Fix messy copied text.</h1>
-          </div>
-          <p>Paste text from PDFs, emails, chats, websites, or documents. Clean it live, then copy the result.</p>
-        </div>
-      </section>
-
-      <section class="tool-section" id="cleaner" aria-label="Text Cleaner tool">
+      <section class="tool-section focused-tool" id="cleaner" aria-label="Text Cleaner tool">
         <div class="container cleaner-shell">
-          <div class="recipe-strip" aria-label="Quick clean presets">
-            <button class="recipe-chip is-active" type="button" data-preset="pdf">
-              <strong>Fix PDF text</strong>
-              <span>Join broken lines</span>
-            </button>
-            <button class="recipe-chip" type="button" data-preset="spaces">
-              <strong>Clean spaces</strong>
-              <span>Trim and tidy</span>
-            </button>
-            <button class="recipe-chip" type="button" data-preset="list">
-              <strong>Clean a list</strong>
-              <span>Remove blanks and repeats</span>
-            </button>
-            <button class="recipe-chip" type="button" data-preset="caption">
-              <strong>Fix caption</strong>
-              <span>Keep short line breaks</span>
-            </button>
-            <button class="recipe-chip" type="button" data-preset="oneLine">
-              <strong>One paragraph</strong>
-              <span>Make it compact</span>
-            </button>
+          <div class="tool-title-bar">
+            <div>
+              <p class="eyebrow">Text Cleaner</p>
+              <h1>Clean text</h1>
+            </div>
+            <div class="editor-actions">
+              <button class="icon-button" type="button" id="pasteButton">Paste</button>
+              <button class="icon-button" type="button" id="sampleButton">Sample</button>
+              <button class="icon-button" type="button" id="clearButton">Clear</button>
+            </div>
           </div>
 
-          <div class="cleaner-grid">
-            <div class="editor-zone">
-              <article class="editor-card">
-                <div class="editor-head">
-                  <div>
-                    <span class="editor-label">Messy text</span>
-                    <p>Paste or type anything here.</p>
-                  </div>
-                  <div class="editor-actions">
-                    <button class="icon-button text-button" type="button" id="pasteButton">Paste</button>
-                    <button class="icon-button text-button" type="button" id="sampleButton">Sample</button>
-                    <button class="icon-button text-button" type="button" id="clearButton">Clear</button>
-                  </div>
-                </div>
-                <textarea id="inputText" class="text-box" spellcheck="true" placeholder="Paste messy text here..."></textarea>
+          <div class="recipe-strip" aria-label="Quick clean presets">
+            <button class="recipe-chip is-active" type="button" data-preset="pdf">Fix PDF</button>
+            <button class="recipe-chip" type="button" data-preset="spaces">Clean spaces</button>
+            <button class="recipe-chip" type="button" data-preset="list">Clean list</button>
+            <button class="recipe-chip" type="button" data-preset="caption">Caption</button>
+            <button class="recipe-chip" type="button" data-preset="oneLine">One line</button>
+          </div>
+
+          <div class="editor-zone">
+            <article class="editor-card">
+              <div class="editor-head">
+                <span class="editor-label">Messy text</span>
                 <div class="metric-row" aria-label="Input text stats">
                   <span><strong id="inputWords">0</strong> words</span>
-                  <span><strong id="inputChars">0</strong> characters</span>
                   <span><strong id="inputLines">0</strong> lines</span>
                 </div>
-              </article>
+              </div>
+              <textarea id="inputText" class="text-box" spellcheck="true" placeholder="Paste messy text here..."></textarea>
+            </article>
 
-              <article class="editor-card result-card">
-                <div class="editor-head">
-                  <div>
-                    <span class="editor-label">Clean result</span>
-                    <p>Updates as you change the options.</p>
-                  </div>
-                  <div class="editor-actions">
-                    <button class="icon-button text-button stable-action" type="button" id="copyButton">Copy</button>
-                    <button class="icon-button text-button" type="button" id="downloadButton">Download</button>
-                  </div>
+            <article class="editor-card result-card">
+              <div class="editor-head">
+                <span class="editor-label">Clean result</span>
+                <div class="editor-actions">
+                  <button class="icon-button stable-action" type="button" id="copyButton">Copy</button>
+                  <button class="icon-button" type="button" id="downloadButton">Download</button>
                 </div>
-                <textarea id="outputText" class="text-box" readonly placeholder="Your cleaned text will appear here."></textarea>
-                <div class="metric-row" aria-label="Output text stats">
-                  <span><strong id="outputWords">0</strong> words</span>
-                  <span><strong id="outputChars">0</strong> characters</span>
-                  <span><strong id="outputLines">0</strong> lines</span>
-                </div>
-              </article>
+              </div>
+              <textarea id="outputText" class="text-box" readonly placeholder="Clean text will appear here."></textarea>
+            </article>
+          </div>
+
+          <div class="option-dock" aria-label="Text cleaning options">
+            <div class="shape-control">
+              <span>Output</span>
+              <div class="segmented-control" role="radiogroup" aria-label="Text shape">
+                <button type="button" class="segment is-active" role="radio" aria-checked="true" data-mode="paragraph">Paragraph</button>
+                <button type="button" class="segment" role="radio" aria-checked="false" data-mode="lines">Lines</button>
+                <button type="button" class="segment" role="radio" aria-checked="false" data-mode="caption">Caption</button>
+                <button type="button" class="segment" role="radio" aria-checked="false" data-mode="oneLine">One line</button>
+              </div>
             </div>
+            <div class="metric-row result-metrics" aria-label="Output text stats">
+              <span><strong id="outputWords">0</strong> words</span>
+              <span><strong id="outputChars">0</strong> characters</span>
+            </div>
+            <button class="advanced-toggle" type="button" id="advancedToggle" aria-expanded="false" aria-controls="advancedPanel">
+              <span>More options</span>
+              <i aria-hidden="true"></i>
+            </button>
+          </div>
 
-            <aside class="cleaner-controls" aria-label="Text cleaning options">
-              <div class="control-group">
-                <div class="control-heading">
-                  <span>Text shape</span>
-                  <small>Choose what the result should feel like.</small>
-                </div>
-                <div class="segmented-control" role="radiogroup" aria-label="Text shape">
-                  <button type="button" class="segment is-active" role="radio" aria-checked="true" data-mode="paragraph">Paragraph</button>
-                  <button type="button" class="segment" role="radio" aria-checked="false" data-mode="lines">Lines</button>
-                  <button type="button" class="segment" role="radio" aria-checked="false" data-mode="caption">Caption</button>
-                  <button type="button" class="segment" role="radio" aria-checked="false" data-mode="oneLine">One line</button>
-                </div>
-              </div>
-
-              <div class="control-group">
-                <div class="control-heading">
-                  <span>Clean up</span>
-                  <small>Turn fixes on or off.</small>
-                </div>
-                <div class="switch-list">
-                  <button class="switch-card is-on" type="button" role="switch" aria-checked="true" data-setting="trimLines">
-                    <span>Trim each line</span>
-                    <i aria-hidden="true"></i>
-                  </button>
-                  <button class="switch-card is-on" type="button" role="switch" aria-checked="true" data-setting="normalizeSpaces">
-                    <span>Remove extra spaces</span>
-                    <i aria-hidden="true"></i>
-                  </button>
-                  <button class="switch-card is-on" type="button" role="switch" aria-checked="true" data-setting="removeBlankLines">
-                    <span>Remove blank lines</span>
-                    <i aria-hidden="true"></i>
-                  </button>
-                  <button class="switch-card" type="button" role="switch" aria-checked="false" data-setting="removeDuplicateLines">
-                    <span>Remove duplicate lines</span>
-                    <i aria-hidden="true"></i>
-                  </button>
-                  <button class="switch-card is-on" type="button" role="switch" aria-checked="true" data-setting="fixPunctuation">
-                    <span>Fix punctuation spacing</span>
-                    <i aria-hidden="true"></i>
-                  </button>
-                </div>
-              </div>
-
-              <div class="control-group insight-panel">
-                <div class="control-heading">
-                  <span>Detected</span>
-                  <small>Problems found in the pasted text.</small>
-                </div>
-                <div class="insight-grid" aria-live="polite">
-                  <div><strong id="brokenLinesCount">0</strong><span>broken lines</span></div>
-                  <div><strong id="extraSpacesCount">0</strong><span>extra spaces</span></div>
-                  <div><strong id="blankLinesCount">0</strong><span>blank lines</span></div>
-                  <div><strong id="duplicateLinesCount">0</strong><span>duplicate lines</span></div>
-                </div>
-              </div>
-
-              <div class="control-group advanced-card">
-                <button class="advanced-toggle" type="button" id="advancedToggle" aria-expanded="false" aria-controls="advancedPanel">
-                  <span>Advanced cleanup</span>
-                  <i aria-hidden="true"></i>
-                </button>
-                <div class="advanced-panel" id="advancedPanel" hidden>
-                  <label class="field-label" for="findText">Find text</label>
-                  <input class="clean-input" id="findText" type="text" autocomplete="off" placeholder="Text to find">
-                  <label class="field-label" for="replaceText">Replace with</label>
-                  <input class="clean-input" id="replaceText" type="text" autocomplete="off" placeholder="Optional replacement">
-                  <button class="switch-card compact-switch" type="button" role="switch" aria-checked="false" data-setting="matchCase">
-                    <span>Match case</span>
-                    <i aria-hidden="true"></i>
-                  </button>
-                </div>
-              </div>
-            </aside>
+          <div class="advanced-panel" id="advancedPanel" hidden>
+            <div class="switch-list">
+              <button class="switch-card is-on" type="button" role="switch" aria-checked="true" data-setting="trimLines">
+                <span>Trim lines</span>
+                <i aria-hidden="true"></i>
+              </button>
+              <button class="switch-card is-on" type="button" role="switch" aria-checked="true" data-setting="normalizeSpaces">
+                <span>Extra spaces</span>
+                <i aria-hidden="true"></i>
+              </button>
+              <button class="switch-card is-on" type="button" role="switch" aria-checked="true" data-setting="removeBlankLines">
+                <span>Blank lines</span>
+                <i aria-hidden="true"></i>
+              </button>
+              <button class="switch-card" type="button" role="switch" aria-checked="false" data-setting="removeDuplicateLines">
+                <span>Duplicate lines</span>
+                <i aria-hidden="true"></i>
+              </button>
+              <button class="switch-card is-on" type="button" role="switch" aria-checked="true" data-setting="fixPunctuation">
+                <span>Punctuation spacing</span>
+                <i aria-hidden="true"></i>
+              </button>
+            </div>
+            <div class="find-row">
+              <label class="field-label" for="findText">Find</label>
+              <input class="clean-input" id="findText" type="text" autocomplete="off" placeholder="Text to find">
+              <label class="field-label" for="replaceText">Replace</label>
+              <input class="clean-input" id="replaceText" type="text" autocomplete="off" placeholder="Replacement">
+              <button class="switch-card compact-switch" type="button" role="switch" aria-checked="false" data-setting="matchCase">
+                <span>Match case</span>
+                <i aria-hidden="true"></i>
+              </button>
+            </div>
           </div>
         </div>
       </section>
