@@ -934,6 +934,13 @@ html[data-theme="dark"] .page-hero h1 {
   background-clip: text;
 }
 
+.hero-copy h1,
+.page-hero h1,
+.not-found-copy h1 {
+  line-height: 1.14;
+  padding-bottom: 0.08em;
+}
+
 .hero-text,
 .section-heading p,
 .tool-intro,
