@@ -32,25 +32,28 @@ if (themePicker) {
   const systemTheme = window.matchMedia("(prefers-color-scheme: dark)");
   const themeColor = document.querySelector('meta[name="theme-color"]');
   const allowedThemes = ["system", "light", "dark"];
+  const isAllowedTheme = (choice) => allowedThemes.includes(choice);
   const getThemeCookie = () => {
     const match = document.cookie.match(/(?:^|; )utiloza-theme=([^;]+)/);
-    return match ? decodeURIComponent(match[1]) : "";
+    const value = match ? decodeURIComponent(match[1]) : "";
+    return isAllowedTheme(value) ? value : "";
   };
-  const getSavedTheme = () => {
+  const getLocalTheme = () => {
     try {
-      const saved = getThemeCookie() || localStorage.getItem("utiloza-theme") || "system";
-      return allowedThemes.includes(saved) ? saved : "system";
+      const value = localStorage.getItem("utiloza-theme") || "";
+      return isAllowedTheme(value) ? value : "";
     } catch {
-      return "system";
+      return "";
     }
   };
-  const saveTheme = (choice) => {
+  const setLocalTheme = (choice) => {
     try {
       localStorage.setItem("utiloza-theme", choice);
     } catch {
-      // The visual theme still changes if storage is unavailable.
+      // Theme still works if localStorage is unavailable.
     }
-
+  };
+  const setThemeCookie = (choice) => {
     try {
       document.cookie = `utiloza-theme=${encodeURIComponent(choice)}; Max-Age=31536000; Path=/; SameSite=Lax`;
       if (location.hostname === "utiloza.top" || location.hostname.endsWith(".utiloza.top")) {
@@ -60,8 +63,28 @@ if (themePicker) {
       // Cookie sync is a convenience, not required for the current page.
     }
   };
+  const getSavedTheme = () => {
+    const cookieTheme = getThemeCookie();
+    const localTheme = getLocalTheme();
+
+    if (cookieTheme) {
+      setLocalTheme(cookieTheme);
+      return cookieTheme;
+    }
+
+    if (localTheme) {
+      setThemeCookie(localTheme);
+      return localTheme;
+    }
+
+    return "system";
+  };
+  const saveTheme = (choice) => {
+    setLocalTheme(choice);
+    setThemeCookie(choice);
+  };
   const resolveTheme = (choice) => (choice === "dark" || (choice === "system" && systemTheme.matches) ? "dark" : "light");
-  let currentChoice = document.documentElement.dataset.themeChoice || getSavedTheme();
+  let currentChoice = getSavedTheme();
   let themeTurn = 0;
 
   const applyTheme = (choice, { animate = true, save = true } = {}) => {
@@ -125,6 +148,14 @@ if (themePicker) {
   });
 
   applyTheme(currentChoice, { animate: false, save: false });
+  saveTheme(currentChoice);
+
+  const syncThemeFromStorage = () => {
+    const savedChoice = getSavedTheme();
+    if (savedChoice !== currentChoice) {
+      applyTheme(savedChoice, { animate: false, save: false });
+    }
+  };
 
   const handleSystemThemeChange = () => {
     if (currentChoice === "system") {
@@ -137,6 +168,13 @@ if (themePicker) {
   } else if (systemTheme.addListener) {
     systemTheme.addListener(handleSystemThemeChange);
   }
+
+  window.addEventListener("focus", syncThemeFromStorage);
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden) {
+      syncThemeFromStorage();
+    }
+  });
 
   document.addEventListener("click", (event) => {
     if (!themePicker.contains(event.target)) {

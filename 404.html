@@ -11,11 +11,45 @@
     <meta name="theme-color" content="#101828">
     <script>
       (() => {
+        const allowedThemes = ["system", "light", "dark"];
+        const isAllowedTheme = (choice) => allowedThemes.includes(choice);
+        const isUtilozaHost = location.hostname === "utiloza.top" || location.hostname.endsWith(".utiloza.top");
+        const getLocalTheme = () => {
+          try {
+            const value = localStorage.getItem("utiloza-theme") || "";
+            return isAllowedTheme(value) ? value : "";
+          } catch {
+            return "";
+          }
+        };
+        const setLocalTheme = (choice) => {
+          try {
+            localStorage.setItem("utiloza-theme", choice);
+          } catch {
+          }
+        };
+        const setThemeCookie = (choice) => {
+          try {
+            document.cookie = "utiloza-theme=" + encodeURIComponent(choice) + "; Max-Age=31536000; Path=/; SameSite=Lax";
+            if (isUtilozaHost) {
+              document.cookie = "utiloza-theme=" + encodeURIComponent(choice) + "; Max-Age=31536000; Path=/; Domain=.utiloza.top; SameSite=Lax";
+            }
+          } catch {
+          }
+        };
+
         try {
           const cookieMatch = document.cookie.match(/(?:^|; )utiloza-theme=([^;]+)/);
           const cookieTheme = cookieMatch ? decodeURIComponent(cookieMatch[1]) : "";
-          const saved = cookieTheme || localStorage.getItem("utiloza-theme") || "system";
-          const stored = ["system", "light", "dark"].includes(saved) ? saved : "system";
+          const localTheme = getLocalTheme();
+          const stored = isAllowedTheme(cookieTheme) ? cookieTheme : localTheme || "system";
+
+          if (isAllowedTheme(cookieTheme)) {
+            setLocalTheme(stored);
+          } else if (localTheme) {
+            setThemeCookie(stored);
+          }
+
           const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
           const resolved = stored === "dark" || (stored === "system" && systemDark) ? "dark" : "light";
           document.documentElement.dataset.theme = resolved;
