@@ -1041,7 +1041,7 @@ h3 {
 
 .replace-panel {
   display: grid;
-  gap: 8px;
+  gap: 12px;
   padding: 10px 12px 12px;
   background: rgba(248, 250, 252, 0.78);
   border-bottom: 1px solid rgba(230, 235, 242, 0.9);
@@ -1049,25 +1049,30 @@ h3 {
 
 .replace-row {
   display: grid;
-  grid-template-columns: auto minmax(150px, 1fr) auto;
-  gap: 8px;
+  grid-template-columns: 66px minmax(0, 1fr);
+  gap: 8px 10px;
   align-items: center;
 }
 
 .replace-row:first-child {
-  grid-template-columns: auto minmax(130px, 1fr) auto auto;
+  grid-template-columns: 66px minmax(0, 1fr);
 }
 
 .replace-actions {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 8px;
+  grid-column: 2;
   min-width: 0;
 }
 
 .match-controls {
   display: flex;
+  grid-column: 2;
+  grid-row: 2;
   gap: 6px;
+  justify-self: start;
 }
 
 .compact-button {
@@ -1076,6 +1081,7 @@ h3 {
 }
 
 .compact-input {
+  min-width: 0;
   min-height: 40px;
 }
 
@@ -1091,6 +1097,9 @@ h3 {
   border-radius: var(--pill-radius);
   font-size: 0.82rem;
   font-weight: 900;
+  grid-column: 2;
+  grid-row: 2;
+  justify-self: end;
   white-space: nowrap;
 }
 
@@ -1098,6 +1107,7 @@ h3 {
   color: var(--muted);
   font-size: 0.82rem;
   font-weight: 900;
+  line-height: 1.1;
 }
 
 .clean-input {
@@ -1289,8 +1299,17 @@ h3 {
     padding-left: 6px;
   }
 
-  .replace-row {
+  .replace-row,
+  .replace-row:first-child {
     grid-template-columns: 1fr;
+  }
+
+  .match-controls,
+  .match-counter,
+  .replace-actions {
+    grid-column: 1;
+    grid-row: auto;
+    justify-self: start;
   }
 }
 
