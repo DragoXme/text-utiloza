@@ -1,6 +1,6 @@
 (() => {
   const inputText = document.querySelector("#inputText");
-  const outputText = document.querySelector("#outputText");
+  const outputPreview = document.querySelector("#outputPreview");
   const pasteButton = document.querySelector("#pasteButton");
   const sampleButton = document.querySelector("#sampleButton");
   const clearButton = document.querySelector("#clearButton");
@@ -10,16 +10,23 @@
   const advancedPanel = document.querySelector("#advancedPanel");
   const findText = document.querySelector("#findText");
   const replaceText = document.querySelector("#replaceText");
+  const prevMatchButton = document.querySelector("#prevMatchButton");
+  const nextMatchButton = document.querySelector("#nextMatchButton");
+  const replaceButton = document.querySelector("#replaceButton");
+  const replaceAllButton = document.querySelector("#replaceAllButton");
+  const matchCounter = document.querySelector("#matchCounter");
   const modeButtons = [...document.querySelectorAll("[data-mode]")];
   const switchButtons = [...document.querySelectorAll("[data-setting]")];
   const presetButtons = [...document.querySelectorAll("[data-preset]")];
 
-  if (!inputText || !outputText) {
+  if (!inputText || !outputPreview) {
     return;
   }
 
   const state = {
     mode: "paragraph",
+    currentOutput: "",
+    currentMatchIndex: 0,
     settings: {
       trimLines: true,
       normalizeSpaces: true,
@@ -135,8 +142,13 @@ and copy the result fast.`;
     return /^\s*(?:[-*\u2022]|[0-9]+[.)]|[a-zA-Z][.)])\s+/.test(line);
   }
 
-  function escapeRegExp(value) {
-    return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  function escapeHtml(value) {
+    return value
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
   }
 
   function normalizeBasic(text) {
@@ -239,19 +251,6 @@ and copy the result fast.`;
       .replace(/[ \t]{2,}/g, " ");
   }
 
-  function applyFindReplace(text) {
-    const findValue = findText.value;
-
-    if (!findValue) {
-      return text;
-    }
-
-    const flags = state.settings.matchCase ? "g" : "gi";
-    const pattern = new RegExp(escapeRegExp(findValue), flags);
-
-    return text.replace(pattern, replaceText.value);
-  }
-
   function cleanText(rawText) {
     let next = normalizeBasic(rawText);
     next = shapeText(next);
@@ -260,9 +259,165 @@ and copy the result fast.`;
       next = fixPunctuationSpacing(next);
     }
 
-    next = applyFindReplace(next);
-
     return next;
+  }
+
+  function getMatches(text = state.currentOutput) {
+    const query = findText.value;
+
+    if (!query) {
+      return [];
+    }
+
+    const haystack = state.settings.matchCase ? text : text.toLowerCase();
+    const needle = state.settings.matchCase ? query : query.toLowerCase();
+    const matches = [];
+    let index = 0;
+
+    while (index <= haystack.length) {
+      const foundAt = haystack.indexOf(needle, index);
+
+      if (foundAt === -1) {
+        break;
+      }
+
+      matches.push({
+        start: foundAt,
+        end: foundAt + query.length
+      });
+      index = foundAt + query.length;
+    }
+
+    return matches;
+  }
+
+  function buildHighlightedOutput(matches) {
+    if (!state.currentOutput) {
+      return "";
+    }
+
+    if (!matches.length) {
+      return escapeHtml(state.currentOutput);
+    }
+
+    let html = "";
+    let lastIndex = 0;
+
+    matches.forEach((match, index) => {
+      const className = index === state.currentMatchIndex
+        ? "output-match is-current"
+        : "output-match";
+
+      html += escapeHtml(state.currentOutput.slice(lastIndex, match.start));
+      html += `<span class="${className}">${escapeHtml(state.currentOutput.slice(match.start, match.end))}</span>`;
+      lastIndex = match.end;
+    });
+
+    html += escapeHtml(state.currentOutput.slice(lastIndex));
+
+    return html;
+  }
+
+  function setReplaceControlsEnabled(hasMatches) {
+    [prevMatchButton, nextMatchButton, replaceButton, replaceAllButton].forEach((button) => {
+      if (button) {
+        button.disabled = !hasMatches;
+      }
+    });
+  }
+
+  function scrollCurrentMatch() {
+    const current = outputPreview.querySelector(".output-match.is-current");
+
+    if (current) {
+      current.scrollIntoView({ block: "center", inline: "nearest" });
+    }
+  }
+
+  function renderOutput(options = {}) {
+    const matches = getMatches();
+
+    if (!matches.length) {
+      state.currentMatchIndex = 0;
+    } else if (state.currentMatchIndex >= matches.length) {
+      state.currentMatchIndex = matches.length - 1;
+    }
+
+    outputPreview.innerHTML = buildHighlightedOutput(matches);
+    outputPreview.classList.toggle("is-empty", !state.currentOutput);
+    updateTextStats("output", state.currentOutput);
+    setReplaceControlsEnabled(Boolean(matches.length));
+
+    if (!findText.value) {
+      matchCounter.textContent = "No search";
+    } else if (!matches.length) {
+      matchCounter.textContent = "0 matches";
+    } else {
+      matchCounter.textContent = `${state.currentMatchIndex + 1} of ${matches.length}`;
+    }
+
+    if (options.scrollToMatch && matches.length) {
+      window.requestAnimationFrame(scrollCurrentMatch);
+    }
+  }
+
+  function renderFromSource() {
+    const input = inputText.value;
+
+    state.currentOutput = cleanText(input);
+    state.currentMatchIndex = 0;
+    updateTextStats("input", input);
+    renderOutput();
+  }
+
+  function replaceCurrentMatch() {
+    const matches = getMatches();
+
+    if (!matches.length) {
+      temporaryButtonText(replaceButton, "No match");
+      return;
+    }
+
+    const match = matches[state.currentMatchIndex] || matches[0];
+    state.currentOutput = `${state.currentOutput.slice(0, match.start)}${replaceText.value}${state.currentOutput.slice(match.end)}`;
+    state.currentMatchIndex = Math.min(state.currentMatchIndex, Math.max(getMatches().length - 1, 0));
+    renderOutput({ scrollToMatch: true });
+    temporaryButtonText(replaceButton, "Replaced");
+  }
+
+  function replaceAllMatches() {
+    const matches = getMatches();
+
+    if (!matches.length) {
+      temporaryButtonText(replaceAllButton, "No match");
+      return;
+    }
+
+    let next = "";
+    let lastIndex = 0;
+
+    matches.forEach((match) => {
+      next += state.currentOutput.slice(lastIndex, match.start);
+      next += replaceText.value;
+      lastIndex = match.end;
+    });
+
+    next += state.currentOutput.slice(lastIndex);
+    state.currentOutput = next;
+    state.currentMatchIndex = 0;
+    renderOutput();
+    temporaryButtonText(replaceAllButton, "Replaced!");
+  }
+
+  function moveMatch(direction) {
+    const matches = getMatches();
+
+    if (!matches.length) {
+      return;
+    }
+
+    state.currentMatchIndex = (state.currentMatchIndex + direction + matches.length) % matches.length;
+    renderOutput({ scrollToMatch: true });
   }
 
   function updateModeButtons() {
@@ -300,16 +455,7 @@ and copy the result fast.`;
     updateModeButtons();
     updateSwitchButtons();
     setPresetActive(presetName);
-    render();
-  }
-
-  function render() {
-    const input = inputText.value;
-    const output = cleanText(input);
-
-    outputText.value = output;
-    updateTextStats("input", input);
-    updateTextStats("output", output);
+    renderFromSource();
   }
 
   function temporaryButtonText(button, label, delay = 1500) {
@@ -322,12 +468,21 @@ and copy the result fast.`;
     }, delay);
   }
 
+  function selectPreviewText() {
+    const range = document.createRange();
+    const selection = window.getSelection();
+
+    range.selectNodeContents(outputPreview);
+    selection.removeAllRanges();
+    selection.addRange(range);
+  }
+
   modeButtons.forEach((button) => {
     button.addEventListener("click", () => {
       state.mode = button.dataset.mode;
       updateModeButtons();
       setPresetActive("");
-      render();
+      renderFromSource();
     });
   });
 
@@ -336,8 +491,15 @@ and copy the result fast.`;
       const setting = button.dataset.setting;
       state.settings[setting] = !state.settings[setting];
       updateSwitchButtons();
+
+      if (setting === "matchCase") {
+        state.currentMatchIndex = 0;
+        renderOutput({ scrollToMatch: true });
+        return;
+      }
+
       setPresetActive("");
-      render();
+      renderFromSource();
     });
   });
 
@@ -347,16 +509,28 @@ and copy the result fast.`;
     });
   });
 
-  inputText.addEventListener("input", render);
-  findText.addEventListener("input", render);
-  replaceText.addEventListener("input", render);
+  inputText.addEventListener("input", renderFromSource);
+
+  findText.addEventListener("input", () => {
+    state.currentMatchIndex = 0;
+    renderOutput({ scrollToMatch: true });
+  });
+
+  replaceText.addEventListener("input", () => {
+    renderOutput();
+  });
+
+  prevMatchButton.addEventListener("click", () => moveMatch(-1));
+  nextMatchButton.addEventListener("click", () => moveMatch(1));
+  replaceButton.addEventListener("click", replaceCurrentMatch);
+  replaceAllButton.addEventListener("click", replaceAllMatches);
 
   pasteButton.addEventListener("click", async () => {
     try {
       const clipboardText = await navigator.clipboard.readText();
       inputText.value = clipboardText;
       inputText.focus();
-      render();
+      renderFromSource();
       temporaryButtonText(pasteButton, "Pasted");
     } catch (error) {
       inputText.focus();
@@ -367,38 +541,38 @@ and copy the result fast.`;
   sampleButton.addEventListener("click", () => {
     inputText.value = sample;
     inputText.focus();
-    render();
+    renderFromSource();
   });
 
   clearButton.addEventListener("click", () => {
     inputText.value = "";
     inputText.focus();
-    render();
+    renderFromSource();
   });
 
   copyButton.addEventListener("click", async () => {
-    if (!outputText.value) {
+    if (!state.currentOutput) {
       temporaryButtonText(copyButton, "No text");
       return;
     }
 
     try {
-      await navigator.clipboard.writeText(outputText.value);
+      await navigator.clipboard.writeText(state.currentOutput);
       temporaryButtonText(copyButton, "Copied!");
     } catch (error) {
-      outputText.focus();
-      outputText.select();
+      outputPreview.focus();
+      selectPreviewText();
       temporaryButtonText(copyButton, "Select text");
     }
   });
 
   downloadButton.addEventListener("click", () => {
-    if (!outputText.value) {
+    if (!state.currentOutput) {
       temporaryButtonText(downloadButton, "No text");
       return;
     }
 
-    const blob = new Blob([outputText.value], { type: "text/plain;charset=utf-8" });
+    const blob = new Blob([state.currentOutput], { type: "text/plain;charset=utf-8" });
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
     link.download = "clean-text.txt";
@@ -417,5 +591,5 @@ and copy the result fast.`;
 
   updateModeButtons();
   updateSwitchButtons();
-  render();
+  renderFromSource();
 })();

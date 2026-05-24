@@ -771,8 +771,29 @@ h3 {
   outline: none;
 }
 
+.icon-button:disabled {
+  color: #98a2b3;
+  background: #f2f4f7;
+  border-color: #e4e7ec;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
 .stable-action {
   min-width: 86px;
+}
+
+.strong-action {
+  min-width: 104px;
+  color: #fff;
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+.strong-action:hover,
+.strong-action:focus-visible {
+  background: var(--primary-dark);
+  border-color: var(--primary-dark);
 }
 
 .text-box {
@@ -789,8 +810,36 @@ h3 {
   line-height: 1.58;
 }
 
+.result-card .text-box {
+  height: clamp(310px, 43vh, 520px);
+}
+
 .text-box::placeholder {
   color: #98a2b3;
+}
+
+.output-preview {
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.output-preview.is-empty::before {
+  color: #98a2b3;
+  content: attr(data-placeholder);
+}
+
+.output-match {
+  padding: 1px 2px;
+  background: #fef08a;
+  border-radius: 5px;
+  box-shadow: 0 0 0 1px rgba(234, 179, 8, 0.16);
+}
+
+.output-match.is-current {
+  color: #fff;
+  background: var(--primary);
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.18);
 }
 
 .metric-row {
@@ -984,11 +1033,52 @@ h3 {
   box-shadow: 0 14px 38px rgba(16, 24, 40, 0.07);
 }
 
-.find-row {
+.replace-panel {
   display: grid;
-  grid-template-columns: auto minmax(160px, 1fr) auto minmax(160px, 1fr) auto;
+  gap: 8px;
+  padding: 10px 12px;
+  background: rgba(248, 250, 252, 0.78);
+  border-bottom: 1px solid rgba(230, 235, 242, 0.9);
+}
+
+.replace-row {
+  display: grid;
+  grid-template-columns: auto minmax(130px, 1fr) auto auto auto;
   gap: 8px;
   align-items: center;
+}
+
+.replace-row:first-child {
+  grid-template-columns: auto minmax(130px, 1fr) auto auto;
+}
+
+.match-controls {
+  display: flex;
+  gap: 6px;
+}
+
+.compact-button {
+  min-height: 36px;
+  padding-inline: 12px;
+}
+
+.compact-input {
+  min-height: 40px;
+}
+
+.match-counter {
+  min-height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 11px;
+  color: var(--muted);
+  background: #fff;
+  border: 1px solid rgba(208, 213, 221, 0.8);
+  border-radius: var(--pill-radius);
+  font-size: 0.82rem;
+  font-weight: 900;
+  white-space: nowrap;
 }
 
 .field-label {
@@ -1014,7 +1104,7 @@ h3 {
 }
 
 .compact-switch {
-  margin-top: 4px;
+  margin-top: 0;
 }
 
 @media (max-width: 920px) {
@@ -1168,7 +1258,7 @@ h3 {
     padding-left: 6px;
   }
 
-  .find-row {
+  .replace-row {
     grid-template-columns: 1fr;
   }
 }
