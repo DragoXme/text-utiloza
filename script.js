@@ -294,7 +294,30 @@ if (siteHeader && headerThemePicker) {
   const searchPanel = headerSearch.querySelector(".header-search-panel");
   const searchCount = headerSearch.querySelector("[data-search-count]");
   const searchResults = headerSearch.querySelector("[data-search-results]");
+  const requestSourceLabels = {
+    main: "Utiloza",
+    text: "Text Utiloza",
+    color: "Color Utiloza",
+    calculator: "Calculator Utiloza",
+  };
   const normalize = (value) => value.toLowerCase().trim();
+  const getToolRequestUrl = (requestText) => {
+    const source = requestSourceLabels[searchScope] || requestSourceLabels.main;
+    const searchedLine = requestText ? `I searched for: ${requestText}\n\n` : "";
+    const body = `Tool idea:\n\n${searchedLine}What should it do:\n\nWhy would it be useful:\n`;
+
+    return `mailto:hello@utiloza.top?subject=${encodeURIComponent(`Tool request from ${source}`)}&body=${encodeURIComponent(body)}`;
+  };
+  const renderRequestResult = (requestText) => `
+    <a class="suggestion-item suggestion-request" href="${escapeSearchText(getToolRequestUrl(requestText))}">
+      <span class="suggestion-icon" aria-hidden="true">${getIcon("request")}</span>
+      <span class="suggestion-copy">
+        <strong>Request this tool</strong>
+        <span>Send the tool idea you wanted to find.</span>
+      </span>
+      <span class="suggestion-action">Request</span>
+    </a>
+  `;
   const getMatches = () => {
     const query = normalize(searchInput.value);
 
@@ -329,7 +352,8 @@ if (siteHeader && headerThemePicker) {
       .map((entry) => entry.item);
   };
   const renderSearchResults = () => {
-    const query = normalize(searchInput.value);
+    const rawQuery = searchInput.value.trim();
+    const query = normalize(rawQuery);
     const matches = getMatches();
 
     searchClear.hidden = !query;
@@ -338,7 +362,10 @@ if (siteHeader && headerThemePicker) {
       : "Search tools";
 
     if (!matches.length) {
-      searchResults.innerHTML = '<p class="suggestion-empty">No matching tools found.</p>';
+      searchResults.innerHTML = `
+        <p class="suggestion-empty">No matching tools found.</p>
+        ${renderRequestResult(rawQuery)}
+      `;
       return;
     }
 
