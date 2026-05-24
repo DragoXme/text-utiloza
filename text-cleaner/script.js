@@ -330,7 +330,18 @@ and copy the result fast.`;
     const current = outputPreview.querySelector(".output-match.is-current");
 
     if (current) {
-      current.scrollIntoView({ block: "center", inline: "nearest" });
+      const previewRect = outputPreview.getBoundingClientRect();
+      const currentRect = current.getBoundingClientRect();
+      const currentTop = currentRect.top - previewRect.top + outputPreview.scrollTop;
+      const currentLeft = currentRect.left - previewRect.left + outputPreview.scrollLeft;
+      const top = currentTop - (outputPreview.clientHeight / 2) + (currentRect.height / 2);
+      const left = currentLeft - 16;
+
+      outputPreview.scrollTo({
+        top: Math.max(0, top),
+        left: Math.max(0, left),
+        behavior: "smooth"
+      });
     }
   }
 

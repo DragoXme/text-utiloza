@@ -139,12 +139,14 @@
                 <div class="replace-row">
                   <label class="field-label" for="replaceText">Replace</label>
                   <input class="clean-input compact-input" id="replaceText" type="text" autocomplete="off" placeholder="Replacement">
-                  <button class="icon-button compact-button stable-action" type="button" id="replaceButton">Replace</button>
-                  <button class="icon-button compact-button strong-action" type="button" id="replaceAllButton">Replace all</button>
-                  <button class="switch-card compact-switch" type="button" role="switch" aria-checked="false" data-setting="matchCase">
-                    <span>Match case</span>
-                    <i aria-hidden="true"></i>
-                  </button>
+                  <div class="replace-actions">
+                    <button class="icon-button compact-button stable-action" type="button" id="replaceButton">Replace</button>
+                    <button class="icon-button compact-button strong-action" type="button" id="replaceAllButton">Replace all</button>
+                    <button class="switch-card compact-switch" type="button" role="switch" aria-checked="false" data-setting="matchCase">
+                      <span>Match case</span>
+                      <i aria-hidden="true"></i>
+                    </button>
+                  </div>
                 </div>
               </div>
               <div id="outputPreview" class="text-box output-preview is-empty" tabindex="0" role="textbox" aria-readonly="true" aria-label="Clean result preview" data-placeholder="Clean text will appear here."></div>
