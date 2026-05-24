@@ -26,6 +26,146 @@ if (siteHeader) {
 const headerMain = document.querySelector(".header-main");
 const siteNav = document.querySelector(".site-nav");
 const headerThemePicker = document.querySelector("[data-theme-picker]");
+const searchCatalog = {
+  main: [
+    {
+      title: "Basic Calculator",
+      type: "Tool",
+      description: "Everyday arithmetic, percentages, copied results, and recent history.",
+      url: "https://calculator.utiloza.top/basic-calculator/",
+      icon: "=",
+      keywords: ["calculator", "math", "arithmetic", "percentage", "numbers"],
+    },
+    {
+      title: "Text Cleaner",
+      type: "Tool",
+      description: "Clean copied text, fix spacing, broken lines, blanks, and duplicates.",
+      url: "https://text.utiloza.top/text-cleaner/",
+      icon: "TC",
+      keywords: ["text", "clean", "pdf", "spacing", "replace", "lines"],
+    },
+    {
+      title: "Gradient Background Generator",
+      type: "Tool",
+      description: "Create gradient images for posts, wallpapers, thumbnails, and designs.",
+      url: "https://color.utiloza.top/gradient-background-generator/",
+      icon: "GB",
+      keywords: ["gradient", "background", "color", "image", "wallpaper"],
+    },
+    {
+      title: "Text tools",
+      type: "Collection",
+      description: "Tools for cleaning and preparing copied text.",
+      url: "https://text.utiloza.top/",
+      icon: "TC",
+      keywords: ["text", "writing", "collection"],
+    },
+    {
+      title: "Color tools",
+      type: "Collection",
+      description: "Tools for gradients, colors, and simple visual assets.",
+      url: "https://color.utiloza.top/",
+      icon: "GB",
+      keywords: ["color", "gradient", "collection"],
+    },
+    {
+      title: "Calculator tools",
+      type: "Collection",
+      description: "Focused calculators for everyday numbers.",
+      url: "https://calculator.utiloza.top/",
+      icon: "=",
+      keywords: ["calculator", "math", "collection"],
+    },
+  ],
+  text: [
+    {
+      title: "Text tools",
+      type: "Collection",
+      description: "Tools for cleaning and preparing copied text.",
+      url: "https://text.utiloza.top/",
+      icon: "TC",
+      keywords: ["text", "writing", "collection"],
+    },
+    {
+      title: "Text Cleaner",
+      type: "Tool",
+      description: "Clean copied text, fix spacing, broken lines, blanks, and duplicates.",
+      url: "https://text.utiloza.top/text-cleaner/",
+      icon: "TC",
+      keywords: ["text", "clean", "pdf", "spacing", "replace", "lines"],
+    },
+  ],
+  color: [
+    {
+      title: "Color tools",
+      type: "Collection",
+      description: "Tools for gradients, colors, and simple visual assets.",
+      url: "https://color.utiloza.top/",
+      icon: "GB",
+      keywords: ["color", "gradient", "collection"],
+    },
+    {
+      title: "Gradient Background Generator",
+      type: "Tool",
+      description: "Create gradient images for posts, wallpapers, thumbnails, and designs.",
+      url: "https://color.utiloza.top/gradient-background-generator/",
+      icon: "GB",
+      keywords: ["gradient", "background", "color", "image", "wallpaper"],
+    },
+  ],
+  calculator: [
+    {
+      title: "Calculator tools",
+      type: "Collection",
+      description: "Focused calculators for everyday numbers.",
+      url: "https://calculator.utiloza.top/",
+      icon: "=",
+      keywords: ["calculator", "math", "collection"],
+    },
+    {
+      title: "Basic Calculator",
+      type: "Tool",
+      description: "Everyday arithmetic, percentages, copied results, and recent history.",
+      url: "https://calculator.utiloza.top/basic-calculator/",
+      icon: "=",
+      keywords: ["calculator", "math", "arithmetic", "percentage", "numbers"],
+    },
+  ],
+};
+const getSearchScope = () => {
+  const host = location.hostname.toLowerCase();
+
+  if (host.startsWith("text.")) {
+    return "text";
+  }
+
+  if (host.startsWith("color.")) {
+    return "color";
+  }
+
+  if (host.startsWith("calculator.")) {
+    return "calculator";
+  }
+
+  const brandContext = document.querySelector(".brand small")?.textContent.toLowerCase() || "";
+
+  if (brandContext.includes("text")) {
+    return "text";
+  }
+
+  if (brandContext.includes("color")) {
+    return "color";
+  }
+
+  if (brandContext.includes("calculator")) {
+    return "calculator";
+  }
+
+  return "main";
+};
+const escapeSearchText = (value) =>
+  value.replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[char]);
+let closeHeaderSearch = () => {};
 
 if (siteHeader && headerMain && siteNav) {
   if (!siteNav.id) {
@@ -62,6 +202,8 @@ if (siteHeader && headerMain && siteNav) {
   };
 
   navToggle.addEventListener("click", () => {
+    closeHeaderSearch();
+
     if (siteHeader.classList.contains("nav-open")) {
       closeNav();
     } else {
@@ -87,7 +229,7 @@ if (siteHeader && headerMain && siteNav) {
     }
   });
 
-  const desktopNav = window.matchMedia("(min-width: 721px)");
+  const desktopNav = window.matchMedia("(min-width: 921px)");
   const handleDesktopNav = () => {
     if (desktopNav.matches) {
       closeNav();
@@ -99,6 +241,174 @@ if (siteHeader && headerMain && siteNav) {
   } else if (desktopNav.addListener) {
     desktopNav.addListener(handleDesktopNav);
   }
+}
+
+if (siteHeader && headerThemePicker) {
+  const searchScope = getSearchScope();
+  const searchItems = searchCatalog[searchScope] || searchCatalog.main;
+  const headerSearch = document.createElement("div");
+  const panelId = "header-search-panel";
+
+  headerSearch.className = "header-search";
+  headerSearch.dataset.headerSearch = "";
+  headerSearch.innerHTML = `
+    <button class="search-trigger" type="button" aria-label="Search" aria-expanded="false" aria-controls="${panelId}">
+      <span class="search-mark" aria-hidden="true"></span>
+    </button>
+    <form class="header-search-form" role="search">
+      <span class="search-mark" aria-hidden="true"></span>
+      <input class="header-search-input" type="search" aria-label="Search tools" placeholder="${searchScope === "main" ? "Search tools" : "Search this site"}" autocomplete="off" spellcheck="false">
+      <button class="search-clear" type="button" hidden>Clear</button>
+    </form>
+    <div class="header-search-panel" id="${panelId}" data-header-search-panel hidden>
+      <div class="search-panel-header">
+        <span data-search-count>${searchScope === "main" ? "Search Utiloza" : "Search this site"}</span>
+      </div>
+      <div class="suggestion-list" data-search-results></div>
+    </div>
+  `;
+  headerThemePicker.before(headerSearch);
+
+  const searchTrigger = headerSearch.querySelector(".search-trigger");
+  const searchForm = headerSearch.querySelector(".header-search-form");
+  const searchInput = headerSearch.querySelector(".header-search-input");
+  const searchClear = headerSearch.querySelector(".search-clear");
+  const searchPanel = headerSearch.querySelector(".header-search-panel");
+  const searchCount = headerSearch.querySelector("[data-search-count]");
+  const searchResults = headerSearch.querySelector("[data-search-results]");
+  const normalize = (value) => value.toLowerCase().trim();
+  const getMatches = () => {
+    const query = normalize(searchInput.value);
+
+    if (!query) {
+      return searchItems;
+    }
+
+    const words = query.split(/\s+/).filter(Boolean);
+
+    return searchItems
+      .map((item) => {
+        const title = normalize(item.title);
+        const searchable = normalize(`${item.title} ${item.type} ${item.description} ${item.keywords.join(" ")}`);
+        let score = 0;
+
+        if (title === query) {
+          score += 8;
+        } else if (title.startsWith(query)) {
+          score += 5;
+        } else if (title.includes(query)) {
+          score += 3;
+        }
+
+        if (words.every((word) => searchable.includes(word))) {
+          score += 2;
+        }
+
+        return { item, score };
+      })
+      .filter((entry) => entry.score > 0)
+      .sort((left, right) => right.score - left.score)
+      .map((entry) => entry.item);
+  };
+  const renderSearchResults = () => {
+    const query = normalize(searchInput.value);
+    const matches = getMatches();
+
+    searchClear.hidden = !query;
+    searchCount.textContent = query
+      ? `${matches.length} result${matches.length === 1 ? "" : "s"}`
+      : searchScope === "main"
+        ? "Search Utiloza"
+        : "Search this site";
+
+    if (!matches.length) {
+      searchResults.innerHTML = '<p class="suggestion-empty">No matching tools found.</p>';
+      return;
+    }
+
+    searchResults.innerHTML = matches
+      .map(
+        (item) => `
+          <a class="suggestion-item" href="${item.url}">
+            <span class="suggestion-icon" aria-hidden="true">${escapeSearchText(item.icon)}</span>
+            <span class="suggestion-copy">
+              <strong>${escapeSearchText(item.title)}</strong>
+              <span>${escapeSearchText(item.description)}</span>
+            </span>
+            <span class="suggestion-action">${escapeSearchText(item.type)}</span>
+          </a>
+        `,
+      )
+      .join("");
+  };
+  const openSearch = ({ focus = true } = {}) => {
+    const navToggle = siteHeader.querySelector(".nav-toggle");
+
+    siteHeader.classList.remove("nav-open");
+    siteHeader.classList.add("search-open");
+    headerSearch.classList.add("is-open");
+    searchTrigger.setAttribute("aria-expanded", "true");
+    searchPanel.hidden = false;
+    renderSearchResults();
+
+    if (navToggle) {
+      navToggle.setAttribute("aria-expanded", "false");
+      navToggle.setAttribute("aria-label", "Open menu");
+    }
+
+    if (focus) {
+      window.requestAnimationFrame(() => searchInput.focus());
+    }
+  };
+  closeHeaderSearch = () => {
+    siteHeader.classList.remove("search-open");
+    headerSearch.classList.remove("is-open");
+    searchTrigger.setAttribute("aria-expanded", "false");
+    searchPanel.hidden = true;
+  };
+  const openFirstMatch = () => {
+    const firstMatch = getMatches()[0];
+
+    if (firstMatch) {
+      location.href = firstMatch.url;
+    }
+  };
+
+  searchTrigger.addEventListener("click", () => {
+    if (headerSearch.classList.contains("is-open")) {
+      closeHeaderSearch();
+    } else {
+      openSearch();
+    }
+  });
+
+  searchInput.addEventListener("focus", () => openSearch({ focus: false }));
+  searchInput.addEventListener("input", renderSearchResults);
+  searchForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    openFirstMatch();
+  });
+  searchClear.addEventListener("click", () => {
+    searchInput.value = "";
+    searchInput.focus();
+    renderSearchResults();
+  });
+  searchResults.addEventListener("click", (event) => {
+    if (event.target.closest?.("a")) {
+      closeHeaderSearch();
+    }
+  });
+  document.addEventListener("click", (event) => {
+    if (!headerSearch.contains(event.target)) {
+      closeHeaderSearch();
+    }
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      closeHeaderSearch();
+      searchInput.blur();
+    }
+  });
 }
 
 const themePicker = document.querySelector("[data-theme-picker]");
