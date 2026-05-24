@@ -451,6 +451,31 @@ html[data-theme="dark"] .header-search-panel .suggestion-icon {
   color: #07111f;
 }
 
+.ui-icon {
+  width: 1.25em;
+  height: 1.25em;
+  display: block;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.card-icon .ui-icon,
+.collection-icon .ui-icon,
+.tool-icon .ui-icon {
+  width: 28px;
+  height: 28px;
+}
+
+.board-grid span .ui-icon,
+.panel-list span .ui-icon,
+.suggestion-icon .ui-icon {
+  width: 18px;
+  height: 18px;
+}
+
 .header-search-panel .suggestion-copy {
   min-width: 0;
 }
@@ -961,7 +986,7 @@ html[data-theme="dark"] .page-hero h1 {
   color: var(--ink);
   background: var(--panel-bg);
   border: 1px solid var(--line);
-  border-radius: var(--pill-radius);
+  border-radius: 34px;
   box-shadow: 0 18px 48px rgba(16, 24, 40, 0.11);
   text-decoration: none;
   backdrop-filter: blur(14px);
@@ -1091,7 +1116,7 @@ html[data-theme="dark"] .strong-action {
   padding: 24px;
   color: var(--ink);
   background: var(--card-bg);
-  border-radius: 8px;
+  border-radius: 34px;
   text-decoration: none;
   box-shadow: 0 20px 58px rgba(16, 24, 40, 0.08);
   overflow: hidden;
@@ -2221,6 +2246,11 @@ html[data-theme="dark"] .not-found-copy h1 {
   .tool-card {
     min-height: 0;
     grid-template-columns: minmax(0, 1fr) 52px;
+    border-radius: 28px;
+  }
+
+  .panel-list a {
+    border-radius: 28px;
   }
 
   .tool-icon {

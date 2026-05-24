@@ -33,7 +33,7 @@ const searchCatalog = {
       type: "Tool",
       description: "Everyday arithmetic, percentages, copied results, and recent history.",
       url: "https://calculator.utiloza.top/basic-calculator/",
-      icon: "=",
+      icon: "calculator",
       keywords: ["calculator", "math", "arithmetic", "percentage", "numbers"],
     },
     {
@@ -41,7 +41,7 @@ const searchCatalog = {
       type: "Tool",
       description: "Clean copied text, fix spacing, broken lines, blanks, and duplicates.",
       url: "https://text.utiloza.top/text-cleaner/",
-      icon: "TC",
+      icon: "text",
       keywords: ["text", "clean", "pdf", "spacing", "replace", "lines"],
     },
     {
@@ -49,88 +49,50 @@ const searchCatalog = {
       type: "Tool",
       description: "Create gradient images for posts, wallpapers, thumbnails, and designs.",
       url: "https://color.utiloza.top/gradient-background-generator/",
-      icon: "GB",
+      icon: "gradient",
       keywords: ["gradient", "background", "color", "image", "wallpaper"],
-    },
-    {
-      title: "Text tools",
-      type: "Collection",
-      description: "Tools for cleaning and preparing copied text.",
-      url: "https://text.utiloza.top/",
-      icon: "TC",
-      keywords: ["text", "writing", "collection"],
-    },
-    {
-      title: "Color tools",
-      type: "Collection",
-      description: "Tools for gradients, colors, and simple visual assets.",
-      url: "https://color.utiloza.top/",
-      icon: "GB",
-      keywords: ["color", "gradient", "collection"],
-    },
-    {
-      title: "Calculator tools",
-      type: "Collection",
-      description: "Focused calculators for everyday numbers.",
-      url: "https://calculator.utiloza.top/",
-      icon: "=",
-      keywords: ["calculator", "math", "collection"],
     },
   ],
   text: [
-    {
-      title: "Text tools",
-      type: "Collection",
-      description: "Tools for cleaning and preparing copied text.",
-      url: "https://text.utiloza.top/",
-      icon: "TC",
-      keywords: ["text", "writing", "collection"],
-    },
     {
       title: "Text Cleaner",
       type: "Tool",
       description: "Clean copied text, fix spacing, broken lines, blanks, and duplicates.",
       url: "https://text.utiloza.top/text-cleaner/",
-      icon: "TC",
+      icon: "text",
       keywords: ["text", "clean", "pdf", "spacing", "replace", "lines"],
     },
   ],
   color: [
     {
-      title: "Color tools",
-      type: "Collection",
-      description: "Tools for gradients, colors, and simple visual assets.",
-      url: "https://color.utiloza.top/",
-      icon: "GB",
-      keywords: ["color", "gradient", "collection"],
-    },
-    {
       title: "Gradient Background Generator",
       type: "Tool",
       description: "Create gradient images for posts, wallpapers, thumbnails, and designs.",
       url: "https://color.utiloza.top/gradient-background-generator/",
-      icon: "GB",
+      icon: "gradient",
       keywords: ["gradient", "background", "color", "image", "wallpaper"],
     },
   ],
   calculator: [
     {
-      title: "Calculator tools",
-      type: "Collection",
-      description: "Focused calculators for everyday numbers.",
-      url: "https://calculator.utiloza.top/",
-      icon: "=",
-      keywords: ["calculator", "math", "collection"],
-    },
-    {
       title: "Basic Calculator",
       type: "Tool",
       description: "Everyday arithmetic, percentages, copied results, and recent history.",
       url: "https://calculator.utiloza.top/basic-calculator/",
-      icon: "=",
+      icon: "calculator",
       keywords: ["calculator", "math", "arithmetic", "percentage", "numbers"],
     },
   ],
+};
+const iconSet = {
+  calculator:
+    '<svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="3"></rect><path d="M8 7h8"></path><path d="M8 11h2"></path><path d="M12 11h2"></path><path d="M16 11h.01"></path><path d="M8 15h2"></path><path d="M12 15h2"></path><path d="M16 15h.01"></path></svg>',
+  text:
+    '<svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l4 4v14H7z"></path><path d="M14 3v5h5"></path><path d="M9 12h6"></path><path d="M9 16h5"></path><path d="m15 18 1.5 1.5L20 16"></path></svg>',
+  gradient:
+    '<svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="14" rx="3"></rect><path d="M7 16 17 8"></path><circle cx="8" cy="9" r="1"></circle><circle cx="16" cy="15" r="1"></circle></svg>',
+  request:
+    '<svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6"></path><path d="M10 21h4"></path><path d="M8 14a6 6 0 1 1 8 0c-.8.7-1 1.5-1 2H9c0-.5-.2-1.3-1-2Z"></path><path d="M12 8v4"></path><path d="M10 10h4"></path></svg>',
 };
 const getSearchScope = () => {
   const host = location.hostname.toLowerCase();
@@ -165,7 +127,63 @@ const getSearchScope = () => {
 };
 const escapeSearchText = (value) =>
   value.replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[char]);
+const getIcon = (name) => iconSet[name] || iconSet.text;
 let closeHeaderSearch = () => {};
+
+const normalizePathname = (pathname) => pathname.replace(/\/index\.html$/, "/") || "/";
+const scrollToSection = (target, { smooth = true } = {}) => {
+  target.scrollIntoView({ behavior: smooth ? "smooth" : "auto", block: "start" });
+
+  if (history.replaceState) {
+    history.replaceState(null, "", `${location.pathname}${location.search}`);
+  }
+};
+const getSamePageSection = (href) => {
+  if (!href || !href.includes("#")) {
+    return null;
+  }
+
+  let url;
+
+  try {
+    url = new URL(href, location.href);
+  } catch {
+    return null;
+  }
+
+  if (url.origin !== location.origin || normalizePathname(url.pathname) !== normalizePathname(location.pathname)) {
+    return null;
+  }
+
+  const id = decodeURIComponent(url.hash.slice(1));
+
+  if (!id) {
+    return null;
+  }
+
+  return document.getElementById(id);
+};
+
+document.addEventListener("click", (event) => {
+  const link = event.target.closest?.("a[href*='#']");
+  const target = link ? getSamePageSection(link.getAttribute("href")) : null;
+
+  if (!target) {
+    return;
+  }
+
+  event.preventDefault();
+  closeHeaderSearch();
+  scrollToSection(target);
+});
+
+if (location.hash) {
+  const initialTarget = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+
+  if (initialTarget) {
+    window.requestAnimationFrame(() => scrollToSection(initialTarget, { smooth: false }));
+  }
+}
 
 if (siteHeader && headerMain && siteNav) {
   if (!siteNav.id) {
@@ -257,12 +275,12 @@ if (siteHeader && headerThemePicker) {
     </button>
     <form class="header-search-form" role="search">
       <span class="search-mark" aria-hidden="true"></span>
-      <input class="header-search-input" type="search" aria-label="Search tools" placeholder="${searchScope === "main" ? "Search tools" : "Search this site"}" autocomplete="off" spellcheck="false">
+      <input class="header-search-input" type="search" aria-label="Search tools" placeholder="Search tools" autocomplete="off" spellcheck="false">
       <button class="search-clear" type="button" hidden>Clear</button>
     </form>
     <div class="header-search-panel" id="${panelId}" data-header-search-panel hidden>
       <div class="search-panel-header">
-        <span data-search-count>${searchScope === "main" ? "Search Utiloza" : "Search this site"}</span>
+        <span data-search-count>Search tools</span>
       </div>
       <div class="suggestion-list" data-search-results></div>
     </div>
@@ -317,9 +335,7 @@ if (siteHeader && headerThemePicker) {
     searchClear.hidden = !query;
     searchCount.textContent = query
       ? `${matches.length} result${matches.length === 1 ? "" : "s"}`
-      : searchScope === "main"
-        ? "Search Utiloza"
-        : "Search this site";
+      : "Search tools";
 
     if (!matches.length) {
       searchResults.innerHTML = '<p class="suggestion-empty">No matching tools found.</p>';
@@ -330,7 +346,7 @@ if (siteHeader && headerThemePicker) {
       .map(
         (item) => `
           <a class="suggestion-item" href="${item.url}">
-            <span class="suggestion-icon" aria-hidden="true">${escapeSearchText(item.icon)}</span>
+            <span class="suggestion-icon" aria-hidden="true">${getIcon(item.icon)}</span>
             <span class="suggestion-copy">
               <strong>${escapeSearchText(item.title)}</strong>
               <span>${escapeSearchText(item.description)}</span>
