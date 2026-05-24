@@ -2475,3 +2475,94 @@ html[data-theme="dark"] .not-found-copy h1 {
     grid-template-columns: 1fr;
   }
 }
+
+
+/* Crawlable tool guidance */
+.tool-info-section {
+  padding: 14px 0 72px;
+}
+
+.tool-info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.tool-info-card {
+  min-width: 0;
+  padding: 24px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 34px;
+  box-shadow: var(--shadow-soft);
+}
+
+.tool-info-card h2 {
+  margin: 0 0 10px;
+  color: var(--ink);
+  font-size: clamp(1.35rem, 2vw, 1.8rem);
+  line-height: 1.1;
+}
+
+.tool-info-card p,
+.tool-info-card li {
+  color: var(--muted);
+  font-weight: 750;
+  line-height: 1.65;
+}
+
+.tool-info-card p,
+.tool-info-card ol {
+  margin: 0;
+}
+
+.tool-info-card p + p,
+.tool-info-card ol + p {
+  margin-top: 12px;
+}
+
+.tool-info-card ol {
+  padding-left: 22px;
+}
+
+.tool-info-wide {
+  grid-column: span 1;
+}
+
+.tool-faq-list {
+  display: grid;
+  gap: 10px;
+}
+
+.tool-faq-list details {
+  background: var(--surface-soft);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  overflow: hidden;
+}
+
+.tool-faq-list summary {
+  cursor: pointer;
+  padding: 14px 16px;
+  color: var(--ink);
+  font-weight: 950;
+}
+
+.tool-faq-list details p {
+  padding: 0 16px 16px;
+}
+
+@media (max-width: 760px) {
+  .tool-info-section {
+    padding: 8px 0 54px;
+  }
+
+  .tool-info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tool-info-card {
+    border-radius: 26px;
+    padding: 20px;
+  }
+}
