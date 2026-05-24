@@ -328,7 +328,7 @@ if (siteHeader && headerMain && siteNav) {
 
 if (siteHeader && headerThemePicker) {
   const searchScope = siteSearchScope;
-  const searchItems = searchCatalog[searchScope] || searchCatalog.main;
+  const searchItems = searchCatalog.main;
   const headerSearch = document.createElement("div");
   const panelId = "header-search-panel";
 
