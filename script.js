@@ -4,6 +4,25 @@ yearLabels.forEach((yearLabel) => {
   yearLabel.textContent = String(new Date().getFullYear());
 });
 
+const siteHeader = document.querySelector(".site-header");
+
+if (siteHeader) {
+  const syncHeaderHeight = () => {
+    const height = Math.ceil(siteHeader.getBoundingClientRect().height);
+    document.documentElement.style.setProperty("--site-header-height", `${height}px`);
+  };
+
+  syncHeaderHeight();
+  window.addEventListener("load", syncHeaderHeight);
+
+  if ("ResizeObserver" in window) {
+    const headerObserver = new ResizeObserver(syncHeaderHeight);
+    headerObserver.observe(siteHeader);
+  } else {
+    window.addEventListener("resize", syncHeaderHeight);
+  }
+}
+
 const themePicker = document.querySelector("[data-theme-picker]");
 
 if (themePicker) {
