@@ -10,10 +10,55 @@
     <link rel="icon" href="/assets/utiloza-mark.svg" type="image/svg+xml">
     <link rel="icon" href="/assets/favicon-512.png" type="image/png" sizes="512x512">
     <link rel="apple-touch-icon" href="/assets/favicon-512.png">
+    <meta name="theme-color" content="#101828">
+    <script>
+      (() => {
+        try {
+          const cookieMatch = document.cookie.match(/(?:^|; )utiloza-theme=([^;]+)/);
+          const cookieTheme = cookieMatch ? decodeURIComponent(cookieMatch[1]) : "";
+          const saved = cookieTheme || localStorage.getItem("utiloza-theme") || "system";
+          const stored = ["system", "light", "dark"].includes(saved) ? saved : "system";
+          const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+          const resolved = stored === "dark" || (stored === "system" && systemDark) ? "dark" : "light";
+          document.documentElement.dataset.theme = resolved;
+          document.documentElement.dataset.themeChoice = stored;
+        } catch {
+          document.documentElement.dataset.theme = "light";
+          document.documentElement.dataset.themeChoice = "system";
+        }
+      })();
+    </script>
     <link rel="stylesheet" href="/styles.css">
   </head>
   <body>
-    <header class="site-header"><div class="container header-inner"><a class="brand" href="/"><img src="/assets/utiloza-mark.svg" alt="" width="34" height="34"><span>Utiloza <small>Text tools</small></span></a><nav class="site-nav" aria-label="Main navigation"><a href="/#tools">Tools</a><a href="/about/">About</a><a href="/privacy/">Privacy</a><a href="/contact/">Contact</a></nav></div></header>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="/" aria-label="Text Utiloza home">
+          <img src="/assets/utiloza-mark.svg" alt="" width="34" height="34">
+          <span>Utiloza <small>Text tools</small></span>
+        </a>
+        <div class="header-main">
+          <nav class="site-nav" aria-label="Main navigation">
+            <a href="/#tools">Tools</a>
+            <a href="/about/">About</a>
+            <a href="/privacy/">Privacy</a>
+            <a href="/contact/">Contact</a>
+          </nav>
+        </div>
+        <div class="theme-picker" data-theme-picker>
+          <button class="theme-trigger theme-system" type="button" aria-label="Theme" title="Theme" aria-expanded="false" aria-haspopup="true" aria-controls="theme-menu">
+            <span class="theme-icon" aria-hidden="true">
+              <span class="theme-core"></span>
+            </span>
+          </button>
+          <div class="theme-menu" id="theme-menu" role="menu" hidden>
+            <button class="theme-option is-active" type="button" role="menuitemradio" aria-checked="true" data-theme-choice="system">System</button>
+            <button class="theme-option" type="button" role="menuitemradio" aria-checked="false" data-theme-choice="light">Light</button>
+            <button class="theme-option" type="button" role="menuitemradio" aria-checked="false" data-theme-choice="dark">Dark</button>
+          </div>
+        </div>
+      </div>
+    </header>
     <main>
       <section class="page-hero"><div class="container"><p class="eyebrow">About</p><h1>Practical text tools for everyday work.</h1><p>Text Utiloza is a focused space for useful text tools.</p></div></section>
       <section class="page-content"><div class="container"><article class="content-panel">
