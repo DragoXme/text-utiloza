@@ -32,19 +32,30 @@
         };
         const setThemeCookie = (choice) => {
           try {
-            document.cookie = "utiloza-theme=" + encodeURIComponent(choice) + "; Max-Age=31536000; Path=/; SameSite=Lax";
             if (isUtilozaHost) {
+              document.cookie = "utiloza-theme=; Max-Age=0; Path=/; SameSite=Lax";
               document.cookie = "utiloza-theme=" + encodeURIComponent(choice) + "; Max-Age=31536000; Path=/; Domain=.utiloza.top; SameSite=Lax";
+            } else {
+              document.cookie = "utiloza-theme=" + encodeURIComponent(choice) + "; Max-Age=31536000; Path=/; SameSite=Lax";
             }
           } catch {
           }
         };
 
         try {
-          const cookieMatch = document.cookie.match(/(?:^|; )utiloza-theme=([^;]+)/);
-          const cookieTheme = cookieMatch ? decodeURIComponent(cookieMatch[1]) : "";
+          if (isUtilozaHost) {
+            document.cookie = "utiloza-theme=; Max-Age=0; Path=/; SameSite=Lax";
+          }
+
+          const cookieThemes = document.cookie
+            .split(";")
+            .map((item) => item.trim())
+            .filter((item) => item.startsWith("utiloza-theme="))
+            .map((item) => decodeURIComponent(item.slice("utiloza-theme=".length)))
+            .filter(isAllowedTheme);
+          const cookieTheme = cookieThemes.at(-1) || "";
           const localTheme = getLocalTheme();
-          const stored = isAllowedTheme(cookieTheme) ? cookieTheme : localTheme || "system";
+          const stored = cookieTheme || localTheme || "system";
 
           if (isAllowedTheme(cookieTheme)) {
             setLocalTheme(stored);

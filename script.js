@@ -33,10 +33,29 @@ if (themePicker) {
   const themeColor = document.querySelector('meta[name="theme-color"]');
   const allowedThemes = ["system", "light", "dark"];
   const isAllowedTheme = (choice) => allowedThemes.includes(choice);
+  const isUtilozaHost = location.hostname === "utiloza.top" || location.hostname.endsWith(".utiloza.top");
+  const clearHostThemeCookie = () => {
+    if (!isUtilozaHost) {
+      return;
+    }
+
+    try {
+      document.cookie = "utiloza-theme=; Max-Age=0; Path=/; SameSite=Lax";
+    } catch {
+      // Cookie sync is a convenience, not required for the current page.
+    }
+  };
   const getThemeCookie = () => {
-    const match = document.cookie.match(/(?:^|; )utiloza-theme=([^;]+)/);
-    const value = match ? decodeURIComponent(match[1]) : "";
-    return isAllowedTheme(value) ? value : "";
+    clearHostThemeCookie();
+
+    const values = document.cookie
+      .split(";")
+      .map((item) => item.trim())
+      .filter((item) => item.startsWith("utiloza-theme="))
+      .map((item) => decodeURIComponent(item.slice("utiloza-theme=".length)))
+      .filter(isAllowedTheme);
+
+    return values.at(-1) || "";
   };
   const getLocalTheme = () => {
     try {
@@ -55,9 +74,11 @@ if (themePicker) {
   };
   const setThemeCookie = (choice) => {
     try {
-      document.cookie = `utiloza-theme=${encodeURIComponent(choice)}; Max-Age=31536000; Path=/; SameSite=Lax`;
-      if (location.hostname === "utiloza.top" || location.hostname.endsWith(".utiloza.top")) {
+      if (isUtilozaHost) {
+        document.cookie = "utiloza-theme=; Max-Age=0; Path=/; SameSite=Lax";
         document.cookie = `utiloza-theme=${encodeURIComponent(choice)}; Max-Age=31536000; Path=/; Domain=.utiloza.top; SameSite=Lax`;
+      } else {
+        document.cookie = `utiloza-theme=${encodeURIComponent(choice)}; Max-Age=31536000; Path=/; SameSite=Lax`;
       }
     } catch {
       // Cookie sync is a convenience, not required for the current page.
