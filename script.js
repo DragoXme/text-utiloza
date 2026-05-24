@@ -222,21 +222,6 @@ if (location.hash) {
   }
 }
 
-if (siteNav && siteSearchScope !== "main" && !siteNav.querySelector("[data-main-hub-link]")) {
-  const allToolsLink = document.createElement("a");
-  allToolsLink.href = "https://utiloza.top/";
-  allToolsLink.textContent = "All tools";
-  allToolsLink.dataset.mainHubLink = "";
-
-  const toolsLink = [...siteNav.querySelectorAll("a")].find((link) => (link.getAttribute("href") || "").includes("#tools"));
-
-  if (toolsLink) {
-    toolsLink.after(allToolsLink);
-  } else {
-    siteNav.prepend(allToolsLink);
-  }
-}
-
 if (siteHeader && headerMain && siteNav) {
   if (!siteNav.id) {
     siteNav.id = "site-navigation";
