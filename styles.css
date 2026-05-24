@@ -781,8 +781,21 @@ h3 {
   cursor: not-allowed;
 }
 
+.toggle-action {
+  inline-size: 76px;
+  flex: 0 0 76px;
+}
+
+.toggle-action.is-active {
+  color: #fff;
+  background: var(--ink);
+  border-color: var(--ink);
+}
+
 .stable-action {
-  min-width: 86px;
+  min-width: 0;
+  inline-size: 112px;
+  flex: 0 0 112px;
 }
 
 .strong-action {
@@ -812,7 +825,7 @@ h3 {
   line-height: 1.58;
 }
 
-.result-card .text-box {
+.result-card.find-replace-open .text-box {
   height: clamp(310px, 43vh, 520px);
 }
 

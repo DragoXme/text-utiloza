@@ -122,11 +122,12 @@
               <div class="editor-head">
                 <span class="editor-label">Clean result</span>
                 <div class="editor-actions">
+                  <button class="icon-button toggle-action" type="button" id="findReplaceToggle" aria-expanded="false" aria-controls="replacePanel">Find</button>
                   <button class="icon-button stable-action" type="button" id="copyButton">Copy</button>
                   <button class="icon-button" type="button" id="downloadButton">Download</button>
                 </div>
               </div>
-              <div class="replace-panel" aria-label="Find and replace in clean result">
+              <div class="replace-panel" id="replacePanel" aria-label="Find and replace in clean result" hidden>
                 <div class="replace-row">
                   <label class="field-label" for="findText">Find</label>
                   <input class="clean-input compact-input" id="findText" type="search" autocomplete="off" placeholder="Find text">

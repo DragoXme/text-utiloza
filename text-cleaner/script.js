@@ -4,8 +4,11 @@
   const pasteButton = document.querySelector("#pasteButton");
   const sampleButton = document.querySelector("#sampleButton");
   const clearButton = document.querySelector("#clearButton");
+  const findReplaceToggle = document.querySelector("#findReplaceToggle");
+  const replacePanel = document.querySelector("#replacePanel");
   const copyButton = document.querySelector("#copyButton");
   const downloadButton = document.querySelector("#downloadButton");
+  const resultCard = outputPreview ? outputPreview.closest(".result-card") : null;
   const advancedToggle = document.querySelector("#advancedToggle");
   const advancedPanel = document.querySelector("#advancedPanel");
   const findText = document.querySelector("#findText");
@@ -479,6 +482,22 @@ and copy the result fast.`;
     }, delay);
   }
 
+  function setFindReplaceOpen(isOpen) {
+    replacePanel.hidden = !isOpen;
+    if (resultCard) {
+      resultCard.classList.toggle("find-replace-open", isOpen);
+    }
+    findReplaceToggle.classList.toggle("is-active", isOpen);
+    findReplaceToggle.setAttribute("aria-expanded", String(isOpen));
+
+    if (isOpen) {
+      window.requestAnimationFrame(() => {
+        findText.focus();
+        renderOutput({ scrollToMatch: Boolean(findText.value) });
+      });
+    }
+  }
+
   function selectPreviewText() {
     const range = document.createRange();
     const selection = window.getSelection();
@@ -536,6 +555,11 @@ and copy the result fast.`;
   replaceButton.addEventListener("click", replaceCurrentMatch);
   replaceAllButton.addEventListener("click", replaceAllMatches);
 
+  findReplaceToggle.addEventListener("click", () => {
+    const isOpen = findReplaceToggle.getAttribute("aria-expanded") === "true";
+    setFindReplaceOpen(!isOpen);
+  });
+
   pasteButton.addEventListener("click", async () => {
     try {
       const clipboardText = await navigator.clipboard.readText();
@@ -573,7 +597,7 @@ and copy the result fast.`;
     } catch (error) {
       outputPreview.focus();
       selectPreviewText();
-      temporaryButtonText(copyButton, "Select text");
+      temporaryButtonText(copyButton, "Select");
     }
   });
 
@@ -591,7 +615,6 @@ and copy the result fast.`;
     link.click();
     link.remove();
     URL.revokeObjectURL(link.href);
-    temporaryButtonText(downloadButton, "Downloaded");
   });
 
   advancedToggle.addEventListener("click", () => {
