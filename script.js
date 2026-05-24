@@ -164,6 +164,7 @@ const getSearchScope = () => {
 const escapeSearchText = (value) =>
   value.replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[char]);
 const getIcon = (name) => iconSet[name] || iconSet.text;
+const siteSearchScope = getSearchScope();
 let closeHeaderSearch = () => {};
 
 const normalizePathname = (pathname) => pathname.replace(/\/index\.html$/, "/") || "/";
@@ -218,6 +219,21 @@ if (location.hash) {
 
   if (initialTarget) {
     window.requestAnimationFrame(() => scrollToSection(initialTarget, { smooth: false }));
+  }
+}
+
+if (siteNav && siteSearchScope !== "main" && !siteNav.querySelector("[data-main-hub-link]")) {
+  const allToolsLink = document.createElement("a");
+  allToolsLink.href = "https://utiloza.top/";
+  allToolsLink.textContent = "All tools";
+  allToolsLink.dataset.mainHubLink = "";
+
+  const toolsLink = [...siteNav.querySelectorAll("a")].find((link) => (link.getAttribute("href") || "").includes("#tools"));
+
+  if (toolsLink) {
+    toolsLink.after(allToolsLink);
+  } else {
+    siteNav.prepend(allToolsLink);
   }
 }
 
@@ -298,7 +314,7 @@ if (siteHeader && headerMain && siteNav) {
 }
 
 if (siteHeader && headerThemePicker) {
-  const searchScope = getSearchScope();
+  const searchScope = siteSearchScope;
   const searchItems = searchCatalog[searchScope] || searchCatalog.main;
   const headerSearch = document.createElement("div");
   const panelId = "header-search-panel";
@@ -583,9 +599,14 @@ if (featuredCarousel) {
   };
 
   if (slides.length > 0) {
+    featuredCarousel.classList.add("is-initializing");
     featuredCarousel.classList.add("is-ready");
     setActiveSlide(activeIndex);
-    window.requestAnimationFrame(tick);
+    window.requestAnimationFrame(() => {
+      featuredCarousel.classList.remove("is-initializing");
+      lastTick = performance.now();
+      window.requestAnimationFrame(tick);
+    });
   }
 
   previousButton?.addEventListener("click", () => goToSlide(activeIndex - 1));
