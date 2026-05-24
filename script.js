@@ -23,6 +23,84 @@ if (siteHeader) {
   }
 }
 
+const headerMain = document.querySelector(".header-main");
+const siteNav = document.querySelector(".site-nav");
+const headerThemePicker = document.querySelector("[data-theme-picker]");
+
+if (siteHeader && headerMain && siteNav) {
+  if (!siteNav.id) {
+    siteNav.id = "site-navigation";
+  }
+
+  const navToggle = document.createElement("button");
+  navToggle.className = "nav-toggle";
+  navToggle.type = "button";
+  navToggle.setAttribute("aria-label", "Open menu");
+  navToggle.setAttribute("aria-expanded", "false");
+  navToggle.setAttribute("aria-controls", siteNav.id);
+  navToggle.innerHTML = '<span class="nav-toggle-mark" aria-hidden="true"></span>';
+
+  siteHeader.classList.add("nav-ready");
+  headerMain.setAttribute("data-mobile-menu", "");
+
+  if (headerThemePicker) {
+    headerThemePicker.after(navToggle);
+  } else {
+    headerMain.after(navToggle);
+  }
+
+  const closeNav = () => {
+    siteHeader.classList.remove("nav-open");
+    navToggle.setAttribute("aria-expanded", "false");
+    navToggle.setAttribute("aria-label", "Open menu");
+  };
+
+  const openNav = () => {
+    siteHeader.classList.add("nav-open");
+    navToggle.setAttribute("aria-expanded", "true");
+    navToggle.setAttribute("aria-label", "Close menu");
+  };
+
+  navToggle.addEventListener("click", () => {
+    if (siteHeader.classList.contains("nav-open")) {
+      closeNav();
+    } else {
+      openNav();
+    }
+  });
+
+  siteNav.addEventListener("click", (event) => {
+    if (event.target.closest?.("a")) {
+      closeNav();
+    }
+  });
+
+  document.addEventListener("click", (event) => {
+    if (!siteHeader.contains(event.target)) {
+      closeNav();
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      closeNav();
+    }
+  });
+
+  const desktopNav = window.matchMedia("(min-width: 721px)");
+  const handleDesktopNav = () => {
+    if (desktopNav.matches) {
+      closeNav();
+    }
+  };
+
+  if (desktopNav.addEventListener) {
+    desktopNav.addEventListener("change", handleDesktopNav);
+  } else if (desktopNav.addListener) {
+    desktopNav.addListener(handleDesktopNav);
+  }
+}
+
 const themePicker = document.querySelector("[data-theme-picker]");
 
 if (themePicker) {
