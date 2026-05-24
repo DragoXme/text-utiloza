@@ -45,6 +45,14 @@ const searchCatalog = {
       keywords: ["bmi", "body mass index", "weight", "height", "health", "calculator"],
     },
     {
+      title: "Age Calculator",
+      type: "Tool",
+      description: "Find exact age, total days, total weeks, total months, and next birthday.",
+      url: "https://calculator.utiloza.top/age-calculator/",
+      icon: "age",
+      keywords: ["age", "birthday", "date", "years", "months", "days", "calculator"],
+    },
+    {
       title: "Text Cleaner",
       type: "Tool",
       description: "Clean copied text, fix spacing, broken lines, blanks, and duplicates.",
@@ -98,6 +106,14 @@ const searchCatalog = {
       icon: "bmi",
       keywords: ["bmi", "body mass index", "weight", "height", "health", "calculator"],
     },
+    {
+      title: "Age Calculator",
+      type: "Tool",
+      description: "Find exact age, total days, total weeks, total months, and next birthday.",
+      url: "https://calculator.utiloza.top/age-calculator/",
+      icon: "age",
+      keywords: ["age", "birthday", "date", "years", "months", "days", "calculator"],
+    },
   ],
 };
 const iconSet = {
@@ -105,6 +121,8 @@ const iconSet = {
     '<svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="3"></rect><path d="M8 7h8"></path><path d="M8 11h2"></path><path d="M12 11h2"></path><path d="M16 11h.01"></path><path d="M8 15h2"></path><path d="M12 15h2"></path><path d="M16 15h.01"></path></svg>',
   bmi:
     '<svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 6h14l-1.5 12h-11z"></path><path d="M9 10a3 3 0 0 1 6 0"></path><path d="M12 10l2-2"></path></svg>',
+  age:
+    '<svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="3"></rect><path d="M8 3v4"></path><path d="M16 3v4"></path><path d="M4 10h16"></path><path d="M9 15h6"></path><path d="M12 12v6"></path></svg>',
   text:
     '<svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l4 4v14H7z"></path><path d="M14 3v5h5"></path><path d="M9 12h6"></path><path d="M9 16h5"></path><path d="m15 18 1.5 1.5L20 16"></path></svg>',
   gradient:
