@@ -37,6 +37,14 @@ const searchCatalog = {
       keywords: ["calculator", "math", "arithmetic", "percentage", "numbers"],
     },
     {
+      title: "BMI Calculator",
+      type: "Tool",
+      description: "Estimate adult body mass index with metric or US units.",
+      url: "https://calculator.utiloza.top/bmi-calculator/",
+      icon: "bmi",
+      keywords: ["bmi", "body mass index", "weight", "height", "health", "calculator"],
+    },
+    {
       title: "Text Cleaner",
       type: "Tool",
       description: "Clean copied text, fix spacing, broken lines, blanks, and duplicates.",
@@ -82,11 +90,21 @@ const searchCatalog = {
       icon: "calculator",
       keywords: ["calculator", "math", "arithmetic", "percentage", "numbers"],
     },
+    {
+      title: "BMI Calculator",
+      type: "Tool",
+      description: "Estimate adult body mass index with metric or US units.",
+      url: "https://calculator.utiloza.top/bmi-calculator/",
+      icon: "bmi",
+      keywords: ["bmi", "body mass index", "weight", "height", "health", "calculator"],
+    },
   ],
 };
 const iconSet = {
   calculator:
     '<svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="3"></rect><path d="M8 7h8"></path><path d="M8 11h2"></path><path d="M12 11h2"></path><path d="M16 11h.01"></path><path d="M8 15h2"></path><path d="M12 15h2"></path><path d="M16 15h.01"></path></svg>',
+  bmi:
+    '<svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 6h14l-1.5 12h-11z"></path><path d="M9 10a3 3 0 0 1 6 0"></path><path d="M12 10l2-2"></path></svg>',
   text:
     '<svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l4 4v14H7z"></path><path d="M14 3v5h5"></path><path d="M9 12h6"></path><path d="M9 16h5"></path><path d="m15 18 1.5 1.5L20 16"></path></svg>',
   gradient:
@@ -452,6 +470,209 @@ if (siteHeader && headerThemePicker) {
       searchInput.blur();
     }
   });
+}
+
+const featuredCarousel = document.querySelector("[data-featured-carousel]");
+
+if (featuredCarousel) {
+  const slides = [...featuredCarousel.querySelectorAll("[data-featured-slide]")].slice(0, 6);
+  const dots = [...featuredCarousel.querySelectorAll("[data-featured-dot]")].slice(0, slides.length);
+  const previousButton = featuredCarousel.querySelector("[data-featured-prev]");
+  const nextButton = featuredCarousel.querySelector("[data-featured-next]");
+  const viewport = featuredCarousel.querySelector("[data-featured-viewport]");
+  const indexLabel = featuredCarousel.querySelector("[data-featured-index]");
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const duration = 6000;
+  let activeIndex = Math.max(0, slides.findIndex((slide) => slide.classList.contains("is-active")));
+  let progressMs = 0;
+  let lastTick = performance.now();
+  let isHoverPaused = false;
+  let isFocusPaused = false;
+  let isKeyboardFocusIntent = false;
+  let pointerStartX = 0;
+  let pointerStartY = 0;
+  let isPointerDown = false;
+  let suppressNextClick = false;
+
+  const clampProgress = (value) => Math.max(0, Math.min(1, value));
+  const updateProgress = (value = 0) => {
+    dots.forEach((dot, index) => {
+      dot.style.setProperty("--featured-progress", index === activeIndex ? clampProgress(value) : 0);
+    });
+  };
+  const isPaused = (now) =>
+    reducedMotion.matches || isHoverPaused || isFocusPaused || document.hidden;
+  const setActiveSlide = (nextIndex) => {
+    if (!slides.length) {
+      return;
+    }
+
+    activeIndex = (nextIndex + slides.length) % slides.length;
+    progressMs = 0;
+    updateProgress(0);
+
+    slides.forEach((slide, index) => {
+      const isActive = index === activeIndex;
+      slide.classList.toggle("is-active", isActive);
+      slide.tabIndex = isActive ? 0 : -1;
+
+      if (isActive) {
+        slide.setAttribute("aria-current", "true");
+        slide.removeAttribute("aria-hidden");
+      } else {
+        slide.removeAttribute("aria-current");
+        slide.setAttribute("aria-hidden", "true");
+      }
+    });
+
+    dots.forEach((dot, index) => {
+      const isActive = index === activeIndex;
+      dot.classList.toggle("is-active", isActive);
+
+      if (isActive) {
+        dot.setAttribute("aria-current", "true");
+      } else {
+        dot.removeAttribute("aria-current");
+      }
+    });
+
+    if (indexLabel) {
+      indexLabel.textContent = String(activeIndex + 1);
+    }
+  };
+  const goToSlide = (nextIndex) => {
+    if (!slides.length) {
+      return;
+    }
+
+    setActiveSlide(nextIndex);
+  };
+  const tick = (now) => {
+    const delta = Math.min(120, now - lastTick);
+    lastTick = now;
+
+    if (!isPaused(now) && slides.length > 1) {
+      progressMs += delta;
+
+      if (progressMs >= duration) {
+        setActiveSlide(activeIndex + 1);
+      } else {
+        updateProgress(progressMs / duration);
+      }
+    }
+
+    window.requestAnimationFrame(tick);
+  };
+
+  if (slides.length > 0) {
+    featuredCarousel.classList.add("is-ready");
+    setActiveSlide(activeIndex);
+    window.requestAnimationFrame(tick);
+  }
+
+  previousButton?.addEventListener("click", () => goToSlide(activeIndex - 1));
+  nextButton?.addEventListener("click", () => goToSlide(activeIndex + 1));
+
+  dots.forEach((dot, index) => {
+    dot.addEventListener("click", () => goToSlide(index));
+  });
+
+  document.addEventListener(
+    "keydown",
+    (event) => {
+      if (event.key === "Tab") {
+        isKeyboardFocusIntent = true;
+      }
+    },
+    true,
+  );
+  featuredCarousel.addEventListener(
+    "pointerdown",
+    () => {
+      isKeyboardFocusIntent = false;
+      isFocusPaused = false;
+    },
+    true,
+  );
+  featuredCarousel.addEventListener("mouseenter", () => {
+    isHoverPaused = true;
+  });
+  featuredCarousel.addEventListener("mouseleave", () => {
+    isHoverPaused = false;
+  });
+  featuredCarousel.addEventListener("focusin", () => {
+    isFocusPaused = isKeyboardFocusIntent;
+  });
+  featuredCarousel.addEventListener("focusout", (event) => {
+    if (!featuredCarousel.contains(event.relatedTarget)) {
+      isFocusPaused = false;
+    }
+  });
+  featuredCarousel.addEventListener("keydown", (event) => {
+    isKeyboardFocusIntent = true;
+    isFocusPaused = true;
+
+    if (event.key === "ArrowLeft") {
+      event.preventDefault();
+      goToSlide(activeIndex - 1);
+    }
+
+    if (event.key === "ArrowRight") {
+      event.preventDefault();
+      goToSlide(activeIndex + 1);
+    }
+  });
+  featuredCarousel.addEventListener(
+    "click",
+    (event) => {
+      if (suppressNextClick) {
+        event.preventDefault();
+        event.stopPropagation();
+        suppressNextClick = false;
+      }
+    },
+    true,
+  );
+
+  viewport?.addEventListener("pointerdown", (event) => {
+    if (event.pointerType === "mouse" && event.button !== 0) {
+      return;
+    }
+
+    pointerStartX = event.clientX;
+    pointerStartY = event.clientY;
+    isPointerDown = true;
+  });
+  viewport?.addEventListener("pointerup", (event) => {
+    if (!isPointerDown) {
+      return;
+    }
+
+    const deltaX = event.clientX - pointerStartX;
+    const deltaY = event.clientY - pointerStartY;
+    isPointerDown = false;
+
+    if (Math.abs(deltaX) > 48 && Math.abs(deltaX) > Math.abs(deltaY) * 1.25) {
+      suppressNextClick = true;
+      goToSlide(activeIndex + (deltaX < 0 ? 1 : -1));
+      window.setTimeout(() => {
+        suppressNextClick = false;
+      }, 0);
+    }
+  });
+  viewport?.addEventListener("pointercancel", () => {
+    isPointerDown = false;
+  });
+
+  document.addEventListener("visibilitychange", () => {
+    lastTick = performance.now();
+  });
+
+  if (reducedMotion.addEventListener) {
+    reducedMotion.addEventListener("change", () => updateProgress(0));
+  } else if (reducedMotion.addListener) {
+    reducedMotion.addListener(() => updateProgress(0));
+  }
 }
 
 const themePicker = document.querySelector("[data-theme-picker]");
