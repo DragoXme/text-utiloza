@@ -69,6 +69,14 @@ const searchCatalog = {
       keywords: ["pdf", "merge", "merger", "combine", "documents", "files"],
     },
     {
+      title: "Stopwatch",
+      type: "Tool",
+      description: "Track elapsed time, pause, reset, and record laps.",
+      url: "https://time.utiloza.top/stopwatch/",
+      icon: "stopwatch",
+      keywords: ["stopwatch", "timer", "time", "lap", "laps", "clock"],
+    },
+    {
       title: "Text Cleaner",
       type: "Tool",
       description: "Clean copied text, fix spacing, broken lines, blanks, and duplicates.",
@@ -149,6 +157,16 @@ const searchCatalog = {
       keywords: ["age", "birthday", "date", "years", "months", "days", "calculator"],
     },
   ],
+  time: [
+    {
+      title: "Stopwatch",
+      type: "Tool",
+      description: "Track elapsed time, pause, reset, and record laps.",
+      url: "https://time.utiloza.top/stopwatch/",
+      icon: "stopwatch",
+      keywords: ["stopwatch", "timer", "time", "lap", "laps", "clock"],
+    },
+  ],
 };
 const usesLocalSearchAssets =
   ["", "localhost", "127.0.0.1", "0.0.0.0", "::1"].includes(location.hostname) || location.hostname.startsWith("192.168.");
@@ -169,6 +187,8 @@ const iconSet = {
     getSearchAssetIcon("text-cleaner-mark.svg"),
   gradient:
     getSearchAssetIcon("gradient-background-generator-mark.svg"),
+  stopwatch:
+    getSearchAssetIcon("stopwatch-mark.svg"),
   request:
     '<svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6"></path><path d="M10 21h4"></path><path d="M8 14a6 6 0 1 1 8 0c-.8.7-1 1.5-1 2H9c0-.5-.2-1.3-1-2Z"></path><path d="M12 8v4"></path><path d="M10 10h4"></path></svg>',
 };
@@ -191,6 +211,10 @@ const getSearchScope = () => {
     return "convert";
   }
 
+  if (host.startsWith("time.")) {
+    return "time";
+  }
+
   const brandContext = document.querySelector(".brand small")?.textContent.toLowerCase() || "";
 
   if (brandContext.includes("text")) {
@@ -207,6 +231,10 @@ const getSearchScope = () => {
 
   if (brandContext.includes("convert")) {
     return "convert";
+  }
+
+  if (brandContext.includes("time")) {
+    return "time";
   }
 
   return "main";
@@ -387,6 +415,7 @@ if (siteHeader && headerThemePicker) {
     color: "Color Utiloza",
     calculator: "Calculator Utiloza",
     convert: "Convert Utiloza",
+    time: "Time Utiloza",
   };
   const normalize = (value) => value.toLowerCase().trim();
   const getToolRequestUrl = (requestText) => {
