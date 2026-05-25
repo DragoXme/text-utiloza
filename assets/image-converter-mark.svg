@@ -6,10 +6,10 @@
       <stop offset="1" stop-color="#34d399"/>
     </linearGradient>
   </defs>
-  <rect width="64" height="64" rx="18" fill="#101828"/>
-  <rect x="13" y="15" width="38" height="31" rx="7" fill="url(#imageConverterBg)"/>
-  <circle cx="24" cy="25" r="4" fill="#ffffff"/>
-  <path d="m18 40 9-9 7 7 5-5 9 9" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M43 17h7v7" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M50 17 38 29" fill="none" stroke="#101828" stroke-width="4" stroke-linecap="round"/>
+  <rect width="64" height="64" rx="18" fill="url(#imageConverterBg)"/>
+  <rect x="13" y="15" width="38" height="31" rx="7" fill="#f8fafc" opacity=".96"/>
+  <circle cx="24" cy="25" r="4" fill="#2563eb"/>
+  <path d="m18 40 9-9 7 7 5-5 9 9" fill="none" stroke="#101828" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M43 17h7v7" fill="none" stroke="#101828" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M50 17 38 29" fill="none" stroke="#101828" stroke-width="4" stroke-linecap="round" opacity=".9"/>
 </svg>

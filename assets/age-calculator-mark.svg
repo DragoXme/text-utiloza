@@ -7,7 +7,7 @@
     </linearGradient>
   </defs>
   <rect width="64" height="64" rx="18" fill="url(#ageCalculatorBg)"/>
-  <rect x="15" y="17" width="34" height="31" rx="7" fill="#101828" opacity=".9"/>
-  <path d="M23 12v10M41 12v10M16 27h32" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round"/>
-  <path d="M26 38h12M32 32v12" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round"/>
+  <rect x="15" y="17" width="34" height="31" rx="7" fill="#f8fafc" opacity=".96"/>
+  <path d="M23 12v10M41 12v10M16 27h32" fill="none" stroke="#101828" stroke-width="4" stroke-linecap="round"/>
+  <path d="M26 38h12M32 32v12" fill="none" stroke="#2563eb" stroke-width="4" stroke-linecap="round"/>
 </svg>

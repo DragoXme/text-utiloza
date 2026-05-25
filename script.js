@@ -439,7 +439,7 @@ if (siteHeader && headerThemePicker) {
     const query = normalize(searchInput.value);
 
     if (!query) {
-      return searchItems;
+      return [];
     }
 
     const words = query.split(/\s+/).filter(Boolean);
@@ -474,6 +474,15 @@ if (siteHeader && headerThemePicker) {
     const matches = getMatches();
 
     searchClear.hidden = !query;
+
+    if (!query) {
+      searchCount.textContent = "Search tools";
+      searchResults.innerHTML = "";
+      searchPanel.hidden = true;
+      return;
+    }
+
+    searchPanel.hidden = false;
     searchCount.textContent = query
       ? `${matches.length} result${matches.length === 1 ? "" : "s"}`
       : "Search tools";
@@ -508,7 +517,6 @@ if (siteHeader && headerThemePicker) {
     siteHeader.classList.add("search-open");
     headerSearch.classList.add("is-open");
     searchTrigger.setAttribute("aria-expanded", "true");
-    searchPanel.hidden = false;
     renderSearchResults();
 
     if (navToggle) {
@@ -527,6 +535,10 @@ if (siteHeader && headerThemePicker) {
     searchPanel.hidden = true;
   };
   const openFirstMatch = () => {
+    if (!searchInput.value.trim()) {
+      return;
+    }
+
     const firstMatch = getMatches()[0];
 
     if (firstMatch) {

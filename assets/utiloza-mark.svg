@@ -1,9 +1,16 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
   <title id="title">Utiloza mark</title>
-  <desc id="desc">A compact grid mark for Utiloza tools.</desc>
-  <rect width="64" height="64" rx="14" fill="#101828"/>
-  <rect x="14" y="14" width="15" height="15" rx="4" fill="#2563eb"/>
-  <rect x="35" y="14" width="15" height="15" rx="4" fill="#15803d"/>
-  <rect x="14" y="35" width="15" height="15" rx="4" fill="#c2410c"/>
-  <path d="M36 42.5h13M42.5 36v13" stroke="#ffffff" stroke-width="5" stroke-linecap="round"/>
+  <desc id="desc">A compact grid mark for the Utiloza tool hub.</desc>
+  <defs>
+    <linearGradient id="utilozaBg" x1="8" y1="8" x2="56" y2="56" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#2563eb"/>
+      <stop offset=".52" stop-color="#14b8a6"/>
+      <stop offset="1" stop-color="#f97316"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="url(#utilozaBg)"/>
+  <rect x="14" y="14" width="15" height="15" rx="4" fill="#f8fafc" opacity=".96"/>
+  <rect x="35" y="14" width="15" height="15" rx="4" fill="#f8fafc" opacity=".9"/>
+  <rect x="14" y="35" width="15" height="15" rx="4" fill="#f8fafc" opacity=".86"/>
+  <path d="M36 42.5h13M42.5 36v13" stroke="#101828" stroke-width="5" stroke-linecap="round"/>
 </svg>
