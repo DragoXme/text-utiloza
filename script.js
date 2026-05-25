@@ -150,21 +150,25 @@ const searchCatalog = {
     },
   ],
 };
+const usesLocalSearchAssets =
+  ["", "localhost", "127.0.0.1", "0.0.0.0", "::1"].includes(location.hostname) || location.hostname.startsWith("192.168.");
+const getSearchAssetUrl = (fileName) => `${usesLocalSearchAssets ? "" : "https://utiloza.top"}/assets/${fileName}`;
+const getSearchAssetIcon = (fileName) => `<img src="${getSearchAssetUrl(fileName)}" alt="" loading="lazy">`;
 const iconSet = {
   calculator:
-    '<img src="/assets/basic-calculator-mark.svg" alt="">',
+    getSearchAssetIcon("basic-calculator-mark.svg"),
   bmi:
-    '<img src="/assets/bmi-calculator-mark.svg" alt="">',
+    getSearchAssetIcon("bmi-calculator-mark.svg"),
   age:
-    '<img src="/assets/age-calculator-mark.svg" alt="">',
+    getSearchAssetIcon("age-calculator-mark.svg"),
   imageConverter:
-    '<img src="/assets/image-converter-mark.svg" alt="">',
+    getSearchAssetIcon("image-converter-mark.svg"),
   pdfMerger:
-    '<img src="/assets/pdf-merger-mark.svg" alt="">',
+    getSearchAssetIcon("pdf-merger-mark.svg"),
   text:
-    '<img src="/assets/text-cleaner-mark.svg" alt="">',
+    getSearchAssetIcon("text-cleaner-mark.svg"),
   gradient:
-    '<img src="/assets/gradient-background-generator-mark.svg" alt="">',
+    getSearchAssetIcon("gradient-background-generator-mark.svg"),
   request:
     '<svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6"></path><path d="M10 21h4"></path><path d="M8 14a6 6 0 1 1 8 0c-.8.7-1 1.5-1 2H9c0-.5-.2-1.3-1-2Z"></path><path d="M12 8v4"></path><path d="M10 10h4"></path></svg>',
 };
@@ -525,6 +529,20 @@ if (siteHeader && headerThemePicker) {
       closeHeaderSearch();
     }
   });
+  searchResults.addEventListener(
+    "error",
+    (event) => {
+      const iconImage = event.target.closest?.(".suggestion-icon img");
+
+      if (!iconImage) {
+        return;
+      }
+
+      iconImage.closest(".suggestion-icon")?.classList.add("is-fallback");
+      iconImage.remove();
+    },
+    true,
+  );
   document.addEventListener("click", (event) => {
     if (!headerSearch.contains(event.target)) {
       closeHeaderSearch();
