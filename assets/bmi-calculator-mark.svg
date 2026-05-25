@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="BMI Calculator">
+  <defs>
+    <linearGradient id="bmiCalculatorBg" x1="8" y1="8" x2="56" y2="56" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#38bdf8"/>
+      <stop offset="1" stop-color="#34d399"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="18" fill="#101828"/>
+  <path d="M16 18h32l-4 30H20z" fill="url(#bmiCalculatorBg)"/>
+  <path d="M24 30a8 8 0 0 1 16 0" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round"/>
+  <path d="M32 30 39 23" fill="none" stroke="#101828" stroke-width="4" stroke-linecap="round"/>
+</svg>

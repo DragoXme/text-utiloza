@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Calculator tools">
+  <defs>
+    <linearGradient id="calculatorToolsBg" x1="8" y1="8" x2="56" y2="56" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#2563eb"/>
+      <stop offset=".55" stop-color="#38bdf8"/>
+      <stop offset="1" stop-color="#34d399"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="18" fill="url(#calculatorToolsBg)"/>
+  <rect x="18" y="12" width="28" height="40" rx="8" fill="#101828" opacity=".9"/>
+  <path d="M24 21h16" stroke="#ffffff" stroke-width="4" stroke-linecap="round"/>
+  <path d="M25 31h.01M32 31h.01M39 31h.01M25 39h.01M32 39h.01M39 39h.01" stroke="#ffffff" stroke-width="5" stroke-linecap="round"/>
+  <path d="M47 17h3M48.5 15.5v3" stroke="#ffffff" stroke-width="3" stroke-linecap="round"/>
+</svg>

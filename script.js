@@ -61,6 +61,14 @@ const searchCatalog = {
       keywords: ["image", "converter", "convert", "png", "jpg", "jpeg", "webp", "photo"],
     },
     {
+      title: "PDF Merger",
+      type: "Tool",
+      description: "Combine multiple PDF files into one PDF in your browser.",
+      url: "https://convert.utiloza.top/pdf-merger/",
+      icon: "pdfMerger",
+      keywords: ["pdf", "merge", "merger", "combine", "documents", "files"],
+    },
+    {
       title: "Text Cleaner",
       type: "Tool",
       description: "Clean copied text, fix spacing, broken lines, blanks, and duplicates.",
@@ -106,6 +114,14 @@ const searchCatalog = {
       icon: "imageConverter",
       keywords: ["image", "converter", "convert", "png", "jpg", "jpeg", "webp", "photo"],
     },
+    {
+      title: "PDF Merger",
+      type: "Tool",
+      description: "Combine multiple PDF files into one PDF in your browser.",
+      url: "https://convert.utiloza.top/pdf-merger/",
+      icon: "pdfMerger",
+      keywords: ["pdf", "merge", "merger", "combine", "documents", "files"],
+    },
   ],
   calculator: [
     {
@@ -143,6 +159,8 @@ const iconSet = {
     '<img src="/assets/age-calculator-mark.svg" alt="">',
   imageConverter:
     '<img src="/assets/image-converter-mark.svg" alt="">',
+  pdfMerger:
+    '<img src="/assets/pdf-merger-mark.svg" alt="">',
   text:
     '<img src="/assets/text-cleaner-mark.svg" alt="">',
   gradient:

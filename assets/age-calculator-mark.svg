@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Age Calculator">
+  <defs>
+    <linearGradient id="ageCalculatorBg" x1="8" y1="8" x2="56" y2="56" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#2563eb"/>
+      <stop offset="0.52" stop-color="#7dd3fc"/>
+      <stop offset="1" stop-color="#34d399"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="18" fill="url(#ageCalculatorBg)"/>
+  <rect x="15" y="17" width="34" height="31" rx="7" fill="#101828" opacity=".9"/>
+  <path d="M23 12v10M41 12v10M16 27h32" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round"/>
+  <path d="M26 38h12M32 32v12" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Color tools">
+  <defs>
+    <linearGradient id="colorToolsBg" x1="8" y1="8" x2="56" y2="56" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#2563eb"/>
+      <stop offset=".45" stop-color="#14b8a6"/>
+      <stop offset="1" stop-color="#f97316"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="18" fill="#101828"/>
+  <path d="M32 12a20 20 0 0 0 0 40h3.2a4.4 4.4 0 0 0 2.8-7.8A4.2 4.2 0 0 1 40.8 37H45a7 7 0 0 0 6.7-9A20.2 20.2 0 0 0 32 12Z" fill="url(#colorToolsBg)"/>
+  <circle cx="23" cy="31" r="3.2" fill="#ffffff"/>
+  <circle cx="31" cy="24" r="3.2" fill="#ffffff"/>
+  <circle cx="40" cy="29" r="3.2" fill="#ffffff"/>
+  <circle cx="31" cy="40" r="3.2" fill="#ffffff"/>
+</svg>
