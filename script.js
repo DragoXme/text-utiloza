@@ -77,6 +77,14 @@ const searchCatalog = {
       keywords: ["stopwatch", "timer", "time", "lap", "laps", "clock"],
     },
     {
+      title: "Timer",
+      type: "Tool",
+      description: "Set a countdown timer with presets, sound alert, and local recovery.",
+      url: "https://time.utiloza.top/timer/",
+      icon: "timer",
+      keywords: ["timer", "countdown", "alarm", "time", "preset", "alert"],
+    },
+    {
       title: "Text Cleaner",
       type: "Tool",
       description: "Clean copied text, fix spacing, broken lines, blanks, and duplicates.",
@@ -166,6 +174,14 @@ const searchCatalog = {
       icon: "stopwatch",
       keywords: ["stopwatch", "timer", "time", "lap", "laps", "clock"],
     },
+    {
+      title: "Timer",
+      type: "Tool",
+      description: "Set a countdown timer with presets, sound alert, and local recovery.",
+      url: "https://time.utiloza.top/timer/",
+      icon: "timer",
+      keywords: ["timer", "countdown", "alarm", "time", "preset", "alert"],
+    },
   ],
 };
 const usesLocalSearchAssets =
@@ -189,6 +205,8 @@ const iconSet = {
     getSearchAssetIcon("gradient-background-generator-mark.svg"),
   stopwatch:
     getSearchAssetIcon("stopwatch-mark.svg"),
+  timer:
+    getSearchAssetIcon("timer-mark.svg"),
   request:
     '<svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6"></path><path d="M10 21h4"></path><path d="M8 14a6 6 0 1 1 8 0c-.8.7-1 1.5-1 2H9c0-.5-.2-1.3-1-2Z"></path><path d="M12 8v4"></path><path d="M10 10h4"></path></svg>',
 };
