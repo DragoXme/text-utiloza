@@ -69,6 +69,14 @@ const searchCatalog = {
       keywords: ["pdf", "merge", "merger", "combine", "documents", "files"],
     },
     {
+      title: "Time",
+      type: "Tool",
+      description: "Show the current time and date in a fullscreen-friendly clock.",
+      url: "https://time.utiloza.top/time/",
+      icon: "time",
+      keywords: ["time", "clock", "current time", "date", "fullscreen"],
+    },
+    {
       title: "Stopwatch",
       type: "Tool",
       description: "Track elapsed time, pause, reset, and record laps.",
@@ -167,6 +175,14 @@ const searchCatalog = {
   ],
   time: [
     {
+      title: "Time",
+      type: "Tool",
+      description: "Show the current time and date in a fullscreen-friendly clock.",
+      url: "https://time.utiloza.top/time/",
+      icon: "time",
+      keywords: ["time", "clock", "current time", "date", "fullscreen"],
+    },
+    {
       title: "Stopwatch",
       type: "Tool",
       description: "Track elapsed time, pause, reset, and record laps.",
@@ -207,6 +223,8 @@ const iconSet = {
     getSearchAssetIcon("stopwatch-mark.svg"),
   timer:
     getSearchAssetIcon("timer-mark.svg"),
+  time:
+    getSearchAssetIcon("time-tools-mark.svg"),
   request:
     '<svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6"></path><path d="M10 21h4"></path><path d="M8 14a6 6 0 1 1 8 0c-.8.7-1 1.5-1 2H9c0-.5-.2-1.3-1-2Z"></path><path d="M12 8v4"></path><path d="M10 10h4"></path></svg>',
 };
@@ -260,7 +278,7 @@ const getSearchScope = () => {
 const escapeSearchText = (value) =>
   value.replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[char]);
 const getIcon = (name) => iconSet[name] || iconSet.text;
-const siteSearchScope = getSearchScope();
+const siteSearchScope = "main";
 let closeHeaderSearch = () => {};
 
 const normalizePathname = (pathname) => pathname.replace(/\/index\.html$/, "/") || "/";
