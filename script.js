@@ -61,6 +61,14 @@ const searchCatalog = {
       keywords: ["image", "converter", "convert", "png", "jpg", "jpeg", "webp", "photo"],
     },
     {
+      title: "QR Code Generator",
+      type: "Tool",
+      description: "Create a QR code for a link or text with color, logo, and download options.",
+      url: "https://qr.utiloza.top/qr-code-generator/",
+      icon: "qr",
+      keywords: ["qr", "qr code", "barcode", "link", "url", "text", "generator", "scan"],
+    },
+    {
       title: "PDF Merger",
       type: "Tool",
       description: "Combine multiple PDF files into one PDF in your browser.",
@@ -147,6 +155,16 @@ const searchCatalog = {
       keywords: ["pdf", "merge", "merger", "combine", "documents", "files"],
     },
   ],
+  qr: [
+    {
+      title: "QR Code Generator",
+      type: "Tool",
+      description: "Create a QR code for a link or text with color, logo, and download options.",
+      url: "https://qr.utiloza.top/qr-code-generator/",
+      icon: "qr",
+      keywords: ["qr", "qr code", "barcode", "link", "url", "text", "generator", "scan"],
+    },
+  ],
   calculator: [
     {
       title: "Basic Calculator",
@@ -213,6 +231,8 @@ const iconSet = {
     getSearchAssetIcon("age-calculator-mark.svg"),
   imageConverter:
     getSearchAssetIcon("image-converter-mark.svg"),
+  qr:
+    getSearchAssetIcon("qr-code-generator-mark.svg"),
   pdfMerger:
     getSearchAssetIcon("pdf-merger-mark.svg"),
   text:
@@ -247,6 +267,10 @@ const getSearchScope = () => {
     return "convert";
   }
 
+  if (host.startsWith("qr.")) {
+    return "qr";
+  }
+
   if (host.startsWith("time.")) {
     return "time";
   }
@@ -269,6 +293,10 @@ const getSearchScope = () => {
     return "convert";
   }
 
+  if (brandContext.includes("qr")) {
+    return "qr";
+  }
+
   if (brandContext.includes("time")) {
     return "time";
   }
@@ -278,7 +306,7 @@ const getSearchScope = () => {
 const escapeSearchText = (value) =>
   value.replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[char]);
 const getIcon = (name) => iconSet[name] || iconSet.text;
-const siteSearchScope = "main";
+const siteSearchScope = getSearchScope();
 let closeHeaderSearch = () => {};
 
 const normalizePathname = (pathname) => pathname.replace(/\/index\.html$/, "/") || "/";
@@ -451,6 +479,7 @@ if (siteHeader && headerThemePicker) {
     color: "Color Utiloza",
     calculator: "Calculator Utiloza",
     convert: "Convert Utiloza",
+    qr: "QR Utiloza",
     time: "Time Utiloza",
   };
   const normalize = (value) => value.toLowerCase().trim();
