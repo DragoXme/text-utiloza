@@ -69,6 +69,22 @@ const searchCatalog = {
       keywords: ["qr", "qr code", "barcode", "link", "url", "text", "generator", "scan"],
     },
     {
+      title: "WhatsApp QR Code Generator",
+      type: "Tool",
+      description: "Create a WhatsApp chat QR code with an optional prefilled message.",
+      url: "https://qr.utiloza.top/whatsapp-qr-code/",
+      icon: "whatsappQr",
+      keywords: ["whatsapp", "whats app", "qr", "qr code", "chat", "message", "phone"],
+    },
+    {
+      title: "Contact QR Code Generator",
+      type: "Tool",
+      description: "Create a vCard contact QR code with phone, email, website, and address fields.",
+      url: "https://qr.utiloza.top/contact-qr-code/",
+      icon: "contactQr",
+      keywords: ["contact", "vcard", "business card", "qr", "qr code", "phone", "email", "address"],
+    },
+    {
       title: "PDF Merger",
       type: "Tool",
       description: "Combine multiple PDF files into one PDF in your browser.",
@@ -164,6 +180,22 @@ const searchCatalog = {
       icon: "qr",
       keywords: ["qr", "qr code", "barcode", "link", "url", "text", "generator", "scan"],
     },
+    {
+      title: "WhatsApp QR Code Generator",
+      type: "Tool",
+      description: "Create a WhatsApp chat QR code with an optional prefilled message.",
+      url: "https://qr.utiloza.top/whatsapp-qr-code/",
+      icon: "whatsappQr",
+      keywords: ["whatsapp", "whats app", "qr", "qr code", "chat", "message", "phone"],
+    },
+    {
+      title: "Contact QR Code Generator",
+      type: "Tool",
+      description: "Create a vCard contact QR code with phone, email, website, and address fields.",
+      url: "https://qr.utiloza.top/contact-qr-code/",
+      icon: "contactQr",
+      keywords: ["contact", "vcard", "business card", "qr", "qr code", "phone", "email", "address"],
+    },
   ],
   calculator: [
     {
@@ -233,6 +265,10 @@ const iconSet = {
     getSearchAssetIcon("image-converter-mark.svg"),
   qr:
     getSearchAssetIcon("qr-code-generator-mark.svg"),
+  whatsappQr:
+    getSearchAssetIcon("whatsapp-qr-code-mark.svg"),
+  contactQr:
+    getSearchAssetIcon("contact-qr-code-mark.svg"),
   pdfMerger:
     getSearchAssetIcon("pdf-merger-mark.svg"),
   text:

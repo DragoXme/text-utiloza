@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Contact QR Code Generator">
+  <defs>
+    <linearGradient id="contactQrBg" x1="7" y1="8" x2="57" y2="56" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#38bdf8"/>
+      <stop offset=".5" stop-color="#2dd4bf"/>
+      <stop offset="1" stop-color="#f59e0b"/>
+    </linearGradient>
+    <linearGradient id="contactQrCard" x1="16" y1="15" x2="49" y2="50" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#e0f2fe"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="18" fill="url(#contactQrBg)"/>
+  <path fill="#052e2b" opacity=".16" d="M9 51c10-12 18-5 30-17 8-8 10-16 16-22v35c0 5-4 9-9 9H9Z"/>
+  <rect x="13" y="15" width="38" height="34" rx="9" fill="url(#contactQrCard)"/>
+  <circle cx="27" cy="28" r="6" fill="#0f766e"/>
+  <path fill="#0f766e" d="M17 43c1.6-6.2 5.4-9.4 10-9.4s8.4 3.2 10 9.4H17Z"/>
+  <g fill="#0f172a">
+    <rect x="39" y="21" width="4.8" height="4.8" rx="1.2"/>
+    <rect x="45.8" y="21" width="4.8" height="4.8" rx="1.2"/>
+    <rect x="39" y="27.8" width="4.8" height="4.8" rx="1.2"/>
+    <rect x="45.8" y="34.6" width="4.8" height="4.8" rx="1.2"/>
+    <rect x="39" y="41.4" width="4.8" height="4.8" rx="1.2"/>
+    <rect x="45.8" y="41.4" width="4.8" height="4.8" rx="1.2"/>
+  </g>
+  <circle cx="48" cy="17" r="8" fill="#ffffff"/>
+  <path d="M48 13v8M44 17h8" fill="none" stroke="#0f172a" stroke-width="3" stroke-linecap="round"/>
+</svg>
