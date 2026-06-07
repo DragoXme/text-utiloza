@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
+  <title id="title">Tic Tac Toe</title>
+  <desc id="desc">Gradient tic tac toe board icon</desc>
+  <defs>
+    <linearGradient id="tile" x1="14" y1="12" x2="116" y2="118" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#7dd3fc"/>
+      <stop offset=".5" stop-color="#34d399"/>
+      <stop offset="1" stop-color="#fb923c"/>
+    </linearGradient>
+    <linearGradient id="board" x1="28" y1="25" x2="101" y2="104" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#f8fafc"/>
+      <stop offset="1" stop-color="#dbeafe"/>
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="34" fill="url(#tile)"/>
+  <rect x="25" y="24" width="78" height="80" rx="20" fill="url(#board)"/>
+  <path d="M51 31v66M77 31v66M32 51h64M32 77h64" fill="none" stroke="#0f172a" stroke-width="6" stroke-linecap="round" opacity=".26"/>
+  <path d="m38 37 14 14M52 37 38 51" fill="none" stroke="#0f172a" stroke-width="7" stroke-linecap="round"/>
+  <circle cx="64" cy="64" r="10" fill="none" stroke="#0f172a" stroke-width="7"/>
+  <path d="m78 78 14 14M92 78 78 92" fill="none" stroke="#0f172a" stroke-width="7" stroke-linecap="round"/>
+  <circle cx="90" cy="40" r="5" fill="#34d399"/>
+  <circle cx="42" cy="90" r="5" fill="#fb923c"/>
+</svg>

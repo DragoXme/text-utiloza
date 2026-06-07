@@ -117,6 +117,22 @@ const searchCatalog = {
       keywords: ["timer", "countdown", "alarm", "time", "preset", "alert"],
     },
     {
+      title: "Tic Tac Toe",
+      type: "Game",
+      description: "Play Tic Tac Toe with easy, normal, hard computer levels or two players.",
+      url: "https://games.utiloza.top/tic-tac-toe/",
+      icon: "ticTacToe",
+      keywords: ["tic tac toe", "tictactoe", "noughts and crosses", "game", "browser game", "x o"],
+    },
+    {
+      title: "Ultimate Tic Tac Toe",
+      type: "Game",
+      description: "Play the 9-board strategy version, also called Mega Tic Tac Toe.",
+      url: "https://games.utiloza.top/ultimate-tic-tac-toe/",
+      icon: "ultimateTicTacToe",
+      keywords: ["ultimate tic tac toe", "mega tic tac toe", "tic tac toe", "tictactoe", "game", "strategy", "browser game"],
+    },
+    {
       title: "Text Cleaner",
       type: "Tool",
       description: "Clean copied text, fix spacing, broken lines, blanks, and duplicates.",
@@ -249,6 +265,24 @@ const searchCatalog = {
       keywords: ["timer", "countdown", "alarm", "time", "preset", "alert"],
     },
   ],
+  games: [
+    {
+      title: "Tic Tac Toe",
+      type: "Game",
+      description: "Play Tic Tac Toe with easy, normal, hard computer levels or two players.",
+      url: "https://games.utiloza.top/tic-tac-toe/",
+      icon: "ticTacToe",
+      keywords: ["tic tac toe", "tictactoe", "noughts and crosses", "game", "browser game", "x o"],
+    },
+    {
+      title: "Ultimate Tic Tac Toe",
+      type: "Game",
+      description: "Play the 9-board strategy version, also called Mega Tic Tac Toe.",
+      url: "https://games.utiloza.top/ultimate-tic-tac-toe/",
+      icon: "ultimateTicTacToe",
+      keywords: ["ultimate tic tac toe", "mega tic tac toe", "tic tac toe", "tictactoe", "game", "strategy", "browser game"],
+    },
+  ],
 };
 const usesLocalSearchAssets =
   ["", "localhost", "127.0.0.1", "0.0.0.0", "::1"].includes(location.hostname) || location.hostname.startsWith("192.168.");
@@ -281,6 +315,10 @@ const iconSet = {
     getSearchAssetIcon("timer-mark.svg"),
   time:
     getSearchAssetIcon("time-tools-mark.svg"),
+  ticTacToe:
+    getSearchAssetIcon("tic-tac-toe-mark.svg"),
+  ultimateTicTacToe:
+    getSearchAssetIcon("ultimate-tic-tac-toe-mark.svg"),
   request:
     '<svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6"></path><path d="M10 21h4"></path><path d="M8 14a6 6 0 1 1 8 0c-.8.7-1 1.5-1 2H9c0-.5-.2-1.3-1-2Z"></path><path d="M12 8v4"></path><path d="M10 10h4"></path></svg>',
 };
@@ -311,6 +349,10 @@ const getSearchScope = () => {
     return "time";
   }
 
+  if (host.startsWith("games.")) {
+    return "games";
+  }
+
   const brandContext = document.querySelector(".brand small")?.textContent.toLowerCase() || "";
 
   if (brandContext.includes("text")) {
@@ -335,6 +377,10 @@ const getSearchScope = () => {
 
   if (brandContext.includes("time")) {
     return "time";
+  }
+
+  if (brandContext.includes("games")) {
+    return "games";
   }
 
   return "main";
@@ -517,21 +563,25 @@ if (siteHeader && headerThemePicker) {
     convert: "Convert Utiloza",
     qr: "QR Utiloza",
     time: "Time Utiloza",
+    games: "Games Utiloza",
   };
   const normalize = (value) => value.toLowerCase().trim();
+  const requestKind = searchScope === "games" ? "game" : "tool";
   const getToolRequestUrl = (requestText) => {
     const source = requestSourceLabels[searchScope] || requestSourceLabels.main;
     const searchedLine = requestText ? `I searched for: ${requestText}\n\n` : "";
-    const body = `Tool idea:\n\n${searchedLine}What should it do:\n\nWhy would it be useful:\n`;
+    const ideaLabel = requestKind === "game" ? "Game idea" : "Tool idea";
+    const actionLabel = requestKind === "game" ? "How should it work" : "What should it do";
+    const body = `${ideaLabel}:\n\n${searchedLine}${actionLabel}:\n\nWhy would it be useful:\n`;
 
-    return `mailto:hello@utiloza.top?subject=${encodeURIComponent(`Tool request from ${source}`)}&body=${encodeURIComponent(body)}`;
+    return `mailto:hello@utiloza.top?subject=${encodeURIComponent(`${requestKind === "game" ? "Game" : "Tool"} request from ${source}`)}&body=${encodeURIComponent(body)}`;
   };
   const renderRequestResult = (requestText) => `
     <a class="suggestion-item suggestion-request" href="${escapeSearchText(getToolRequestUrl(requestText))}">
       <span class="suggestion-icon" aria-hidden="true">${getIcon("request")}</span>
       <span class="suggestion-copy">
-        <strong>Request this tool</strong>
-        <span>Send the tool idea you wanted to find.</span>
+        <strong>Request this ${requestKind}</strong>
+        <span>Send the ${requestKind} idea you wanted to find.</span>
       </span>
       <span class="suggestion-action">Request</span>
     </a>

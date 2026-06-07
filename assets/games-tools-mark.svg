@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
+  <title id="title">Games Utiloza</title>
+  <desc id="desc">Gradient game controller icon</desc>
+  <defs>
+    <linearGradient id="tile" x1="18" y1="14" x2="112" y2="118" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#7dd3fc"/>
+      <stop offset=".48" stop-color="#34d399"/>
+      <stop offset="1" stop-color="#fb923c"/>
+    </linearGradient>
+    <linearGradient id="face" x1="28" y1="38" x2="104" y2="92" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#f8fafc"/>
+      <stop offset="1" stop-color="#dbeafe"/>
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="34" fill="url(#tile)"/>
+  <path d="M31 69c3-17 11-25 25-24h16c14-1 22 7 25 24l5 23c2 9-7 17-15 12l-14-9H55l-14 9c-8 5-17-3-15-12l5-23Z" fill="url(#face)"/>
+  <path d="M54 45h20" fill="none" stroke="#0f172a" stroke-width="8" stroke-linecap="round" opacity=".22"/>
+  <path d="M45 67v18M36 76h18" fill="none" stroke="#0f172a" stroke-width="8" stroke-linecap="round"/>
+  <circle cx="82" cy="69" r="6" fill="#0f172a"/>
+  <circle cx="94" cy="82" r="6" fill="#0f172a"/>
+  <circle cx="84" cy="86" r="3" fill="#34d399"/>
+  <circle cx="96" cy="65" r="3" fill="#fb923c"/>
+</svg>
