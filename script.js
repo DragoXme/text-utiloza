@@ -133,6 +133,14 @@ const searchCatalog = {
       keywords: ["ultimate tic tac toe", "mega tic tac toe", "tic tac toe", "tictactoe", "game", "strategy", "browser game"],
     },
     {
+      title: "Snake Game",
+      type: "Game",
+      description: "Play classic Snake with keyboard, swipe, touch controls, and saved best score.",
+      url: "https://games.utiloza.top/snake-game/",
+      icon: "snakeGame",
+      keywords: ["snake", "snake game", "classic snake", "browser game", "arcade", "score", "mobile game"],
+    },
+    {
       title: "Text Cleaner",
       type: "Tool",
       description: "Clean copied text, fix spacing, broken lines, blanks, and duplicates.",
@@ -282,6 +290,14 @@ const searchCatalog = {
       icon: "ultimateTicTacToe",
       keywords: ["ultimate tic tac toe", "mega tic tac toe", "tic tac toe", "tictactoe", "game", "strategy", "browser game"],
     },
+    {
+      title: "Snake Game",
+      type: "Game",
+      description: "Play classic Snake with keyboard, swipe, touch controls, and saved best score.",
+      url: "https://games.utiloza.top/snake-game/",
+      icon: "snakeGame",
+      keywords: ["snake", "snake game", "classic snake", "browser game", "arcade", "score", "mobile game"],
+    },
   ],
 };
 const usesLocalSearchAssets =
@@ -319,6 +335,8 @@ const iconSet = {
     getSearchAssetIcon("tic-tac-toe-mark.svg"),
   ultimateTicTacToe:
     getSearchAssetIcon("ultimate-tic-tac-toe-mark.svg"),
+  snakeGame:
+    getSearchAssetIcon("snake-game-mark.svg"),
   request:
     '<svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6"></path><path d="M10 21h4"></path><path d="M8 14a6 6 0 1 1 8 0c-.8.7-1 1.5-1 2H9c0-.5-.2-1.3-1-2Z"></path><path d="M12 8v4"></path><path d="M10 10h4"></path></svg>',
 };
