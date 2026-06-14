@@ -135,7 +135,7 @@ const searchCatalog = {
     {
       title: "Snake Game",
       type: "Game",
-      description: "Play classic Snake with keyboard, swipe controls, and saved best score.",
+      description: "Play classic Snake with keyboard, swipe controls, and best-score tracking.",
       url: "https://games.utiloza.top/snake-game/",
       icon: "snakeGame",
       keywords: ["snake", "snake game", "classic snake", "browser game", "arcade", "score", "mobile game"],
@@ -293,7 +293,7 @@ const searchCatalog = {
     {
       title: "Snake Game",
       type: "Game",
-      description: "Play classic Snake with keyboard, swipe controls, and saved best score.",
+      description: "Play classic Snake with keyboard, swipe controls, and best-score tracking.",
       url: "https://games.utiloza.top/snake-game/",
       icon: "snakeGame",
       keywords: ["snake", "snake game", "classic snake", "browser game", "arcade", "score", "mobile game"],
